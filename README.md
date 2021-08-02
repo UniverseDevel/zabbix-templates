@@ -6,7 +6,7 @@ List of Shelly supported devices:
 - **Shelly Motion**
 - more to come (I hope)...
 
-Each device contains two templates one is using HTTP calls to collect device information from API status page and other is collecting device information from MQTT broker "shellies/*/info" topic. Templates were tested and created on Zabbix version 5.4 but some other versions will most likely work as well.
+Each device has two templates, one is using HTTP calls to collect device information from API status page and other is collecting device information from MQTT broker "shellies/*/info" topic. Templates were tested and created on Zabbix version 5.4 but some other versions will most likely work as well.
 
 # How to configure HTTP templates
 
