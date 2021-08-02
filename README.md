@@ -1,6 +1,6 @@
 # Information
 
-List of Shelly supported devices:
+List of supported Shelly devices:
 - **Shelly 3EM**
 - **Shelly Plug and Plug-S**
 - **Shelly Motion**
