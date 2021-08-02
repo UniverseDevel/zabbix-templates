@@ -5,7 +5,7 @@ List of Shelly supported devices:
 - **Shelly Plug and Plug-S**
 - **Shelly Motion**
 - more to come (I hope)...
- 
+
 Each device contains two templates one is using HTTP calls to collect device information from API status page and other is collecting device information from MQTT broker "shellies/*/info" topic. Templates were tested and created on Zabbix version 5.4 but some other versions will most likely work as well.
 
 # How to configure HTTP templates
@@ -23,7 +23,7 @@ Each device contains two templates one is using HTTP calls to collect device inf
 **Agent configuration**: Agent requires parameter "Hostname" to contain name of your Zabbix host that you create with this tempalte linked (multiple Hostnames can be separated with comma ","). This is due to MQTT plugin in Zabbix Agent being Active monitoring.  
 **Host name**: Same as value provided in Zabbix Agent 2 configuration in parameter "Hostname".  
 **Host interface**: Type "Agent" with IP/DNS and Port pointing to Zabbix Agent 2.  
-**Macros**: Macro "{$MQTT_DEVICE_ID}" is mandatory and can be obtained from Shelly device while enabling MQTT (you can check "Use custom MQTT prefix" to display current value or you can set your own, just make it 25 characters or less to avoid problems). Other macros are only needed when your MQTT broker is on different location or when you configured useranme and password for your broker.  
+**Macros**: Macro "{$MQTT_DEVICE_ID}" is mandatory and can be obtained from Shelly device while enabling MQTT (you can check "Use custom MQTT prefix" to display current value, or you can set your own, just make it 25 characters or less to avoid problems). Other macros are only needed when your MQTT broker is on different location or when you configured useranme and password for your broker.
 - "{$MQTT_DEVICE_ID}": **mandatory**, default: ""
 - "{$MQTT_BROKER_HOST}": optional, default: "tcp://localhost:1883"
 - "{$MQTT_BROKER_USER}": optional, default: ""
@@ -31,10 +31,10 @@ Each device contains two templates one is using HTTP calls to collect device inf
 
 # Warnings
 
-- Using monitoring on Shelly Motion device may with current firmware (v1.1.2) slovly lead to poor performance or no responsivity from device at all. This is due to problems with firmware and this problem is acknowledged by Shelly Support. There is a BETA firmware available that deals with this issues and greatly improves device performance (but not solving it in general yet). This BETA firmware can be applied via following link: "http://\<your device IP\>/ota?url=http://repo.shelly.cloud/firmware/rc/SHMOS-01_build.gbl". Apply this firmware only at your own risk. It is advised to contact Shelly Support for more information and more up-to-date steps.
+- Using monitoring on Shelly Motion device may with current firmware (v1.1.2) slowly lead to poor performance or no responsivity from device at all. This is due to problems with firmware and this problem is acknowledged by Shelly Support. There is a BETA firmware available that deals with these issues and greatly improves device performance (but not solving it in general yet). This BETA firmware can be applied via following link: "http://\<your device IP\>/ota?url=http://repo.shelly.cloud/firmware/rc/SHMOS-01_build.gbl". Apply this firmware only at your own risk. It is advised to contact Shelly Support for more information and more up-to-date steps.
 - When using MQTT temaplte with Shelly Motion, some monitoring items may be unallocated due to current firmware publishing older version of "shellies/*/info" topic that does not contain same values as HTTP API status page.
 - Both HTTP and MQTT templates for Shelly 3EM device contain disabled Electrometer N vaues as these values are optional on device and therefore might need manual enabling.
-Not all templates triggers are actually useful so disable/enable them according your personal need.
+  Not all templates triggers are actually useful so disable/enable them according your personal need.
 
 # Other sources
 
