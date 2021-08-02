@@ -33,7 +33,7 @@ Each device has two templates, one is using HTTP calls to collect device informa
 
 - Using monitoring on Shelly Motion device may with current firmware (v1.1.2) slowly lead to poor performance or no responsivity from device at all. This is due to problems with firmware and this problem is acknowledged by Shelly Support. There is a BETA firmware available that deals with these issues and greatly improves device performance (but not solving it in general yet). This BETA firmware can be applied via following link: "http://\<your device IP\>/ota?url=http://repo.shelly.cloud/firmware/rc/SHMOS-01_build.gbl". Apply this firmware only at your own risk. It is advised to contact Shelly Support for more information and more up-to-date steps.
 - When using MQTT temaplte with Shelly Motion, some monitoring items may be unallocated due to current firmware publishing older version of "shellies/*/info" topic that does not contain same values as HTTP API status page.
-- Both HTTP and MQTT templates for Shelly 3EM device contain disabled Electrometer N vaues as these values are optional on device and therefore might need manual enabling.
+- Both HTTP and MQTT templates for Shelly 3EM device contain disabled Electrometer N values as these values are optional on device and therefore might need manual enabling.
   Not all templates triggers are actually useful so disable/enable them according your personal need.
 
 # Other sources
