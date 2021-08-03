@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.4</version>
+    <date>2021-08-03T07:09:55Z</date>
+    <groups>
+        <group>
+            <uuid>36bff6c29af64692839d077febfc7079</uuid>
+            <name>Templates/Network devices</name>
+        </group>
+        <group>
+            <uuid>b2888f8ec8184d1fbfaa4bc302464aac</uuid>
+            <name>Zyxel</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>b32405ce02594ae782c6f96b5740d54e</uuid>
+            <template>Template ZyXel Access Point NWA</template>
+            <name>Template ZyXel Access Point NWA</name>
+            <templates>
+                <template>
+                    <name>Template Module ICMP Ping</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Templates/Network devices</name>
+                </group>
+                <group>
+                    <name>Zyxel</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>5859d89706b24d448fa0cac8555b063d</uuid>
+                    <name>SNMP status</name>
+                    <type>INTERNAL</type>
+                    <key>zabbix[host,snmp,available]</key>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Status</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>c8356c0dd7844e9789a05ef8382b35de</uuid>
+                            <expression>max(/Template ZyXel Access Point NWA/zabbix[host,snmp,available],5m)=0</expression>
+                            <name>SNMP availability</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template ZyXel Access Point NWA/icmpping,#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>56b5ef6160274f08988da66ed20beaae</uuid>
+                    <name>CPU usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.4.0</snmp_oid>
+                    <key>zyxel.cpu</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>39e81807d82c4c9c8d275a5997be83be</uuid>
+                            <expression>min(/Template ZyXel Access Point NWA/zyxel.cpu,#5)&gt;85</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>min(/Template ZyXel Access Point NWA/zyxel.cpu,#5)&lt;80</recovery_expression>
+                            <name>CPU load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>63dbf2dbbf0240118557e5429e49f452</uuid>
+                    <name>Firmware version</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.6.0</snmp_oid>
+                    <key>zyxel.firmware</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>SERIALNO_A</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>c6213c73f7a34411857fe509ea8513a2</uuid>
+                    <name>Flesh usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.6.0</snmp_oid>
+                    <key>zyxel.flesh</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>0cf3a8ace67641a4aa2aa8b42b23e609</uuid>
+                            <expression>max(/Template ZyXel Access Point NWA/zyxel.flesh,#3)&gt;80</expression>
+                            <name>Flesh load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>b3464122dbe541608a6c41a1fad1ed3c</uuid>
+                    <name>Model</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
+                    <key>zyxel.model</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>TYPE_FULL</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>a1348f4a74d543b399c128aaa7142c0f</uuid>
+                    <name>RAM usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.5.0</snmp_oid>
+                    <key>zyxel.ram</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>caefc6eca34b48a088de2f0a46db1f7e</uuid>
+                            <expression>min(/Template ZyXel Access Point NWA/zyxel.ram,#5)&gt;80</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>max(/Template ZyXel Access Point NWA/zyxel.ram,#5)&lt;75</recovery_expression>
+                            <name>Memory load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>a1cb243d7eaa4cf593ec9fd764e6d0ae</uuid>
+                    <name>Serial number</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.12.0</snmp_oid>
+                    <key>zyxel.serial</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>020bedcc1eaa4534b1bf06910216d9d2</uuid>
+                    <name>System Name</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.1.5.0</snmp_oid>
+                    <key>zyxel.sysname</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>235f787044094bb799653d13f63a3fca</uuid>
+                    <name>Uptime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.25.1.1.0</snmp_oid>
+                    <key>zyxel.uptime</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <units>uptime</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>0.01</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>a0361f18fb08463a85a902fe3a9cb057</uuid>
+                    <name>Network interface discovery</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},IF-MIB::ifDescr]</snmp_oid>
+                    <key>ifDescr</key>
+                    <delay>1h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>eth*</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>923c414c62a540689d1469cf17e6be36</uuid>
+                            <name>Incoming traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifInOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifInOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>97e102317a5f469c9edcf59331406244</uuid>
+                            <name>Outgoing traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifOutOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifOutOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>eef189f4cb0f459ab11184f1fb437234</uuid>
+                            <name>Traffic on interface {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template ZyXel Access Point NWA</host>
+                                        <key>ifInOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template ZyXel Access Point NWA</host>
+                                        <key>ifOutOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+        <template>
+            <uuid>1f3bf1dea6e24dd9af6131bbbdd309c0</uuid>
+            <template>Template ZyXel Switch GS1900</template>
+            <name>Template ZyXel Switch GS1900</name>
+            <templates>
+                <template>
+                    <name>Template Module ICMP Ping</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Templates/Network devices</name>
+                </group>
+                <group>
+                    <name>Zyxel</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>bd90bd7482b94e209a3b68d784717c8e</uuid>
+                    <name>SNMP status</name>
+                    <type>INTERNAL</type>
+                    <key>zabbix[host,snmp,available]</key>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Status</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>b36c8779ee7f4383b90824e19ecffd4f</uuid>
+                            <expression>max(/Template ZyXel Switch GS1900/zabbix[host,snmp,available],5m)=0</expression>
+                            <name>SNMP availability</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template ZyXel Switch GS1900/icmpping,#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>2ee8f73ea2f340039b95daa7350bae3f</uuid>
+                    <name>CPU usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.4.0</snmp_oid>
+                    <key>zyxel.cpu</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>f98be1def8f94dc6a77506ac53e06fc7</uuid>
+                            <expression>min(/Template ZyXel Switch GS1900/zyxel.cpu,#5)&gt;85</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>min(/Template ZyXel Switch GS1900/zyxel.cpu,#5)&lt;80</recovery_expression>
+                            <name>CPU load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>aa25827f6b454c3b858a1f1a7c89f121</uuid>
+                    <name>Firmware version</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.6.0</snmp_oid>
+                    <key>zyxel.firmware</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>SERIALNO_A</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f076400c75c949979f747ba48c102877</uuid>
+                    <name>Model</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
+                    <key>zyxel.model</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>TYPE_FULL</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f8e0259075a14c76bd7866ce1864a770</uuid>
+                    <name>RAM usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.5.0</snmp_oid>
+                    <key>zyxel.ram</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>e875113009ed4a1c823432c957091934</uuid>
+                            <expression>min(/Template ZyXel Switch GS1900/zyxel.ram,#5)&gt;80</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>max(/Template ZyXel Switch GS1900/zyxel.ram,#5)&lt;75</recovery_expression>
+                            <name>Memory load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>e883cc7b0fb143d1abab19fb5d7a17da</uuid>
+                    <name>Serial number</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.12.0</snmp_oid>
+                    <key>zyxel.serial</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>cc7ede7ab76d4398856a665941f4ef55</uuid>
+                    <name>System Name</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.1.5.0</snmp_oid>
+                    <key>zyxel.sysname</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>ebcf9a95273a4483ad8250f92faa5248</uuid>
+                    <name>Uptime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.3.0</snmp_oid>
+                    <key>zyxel.uptime</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <units>uptime</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>0.01</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>a2d0429bd60d4f42a810e3563faa5771</uuid>
+                    <name>Network interface discovery</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},IF-MIB::ifDescr]</snmp_oid>
+                    <key>ifDescr</key>
+                    <delay>1h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>eth*</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>dba8b13f2a0f43e8b32ebe969a72c158</uuid>
+                            <name>Incoming traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifInOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifInOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>15c63a59eb7248d3b33db4daa5df6073</uuid>
+                            <name>Outgoing traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifOutOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifOutOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>ebb5f024c5114bc29b80bf8b063e3b9c</uuid>
+                            <name>Traffic on interface {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template ZyXel Switch GS1900</host>
+                                        <key>ifInOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template ZyXel Switch GS1900</host>
+                                        <key>ifOutOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+        <template>
+            <uuid>a4059452c86144cab985e9d92cba3826</uuid>
+            <template>Template ZyXel ZyWALL USG 200</template>
+            <name>Template ZyXel ZyWALL USG 200</name>
+            <templates>
+                <template>
+                    <name>Template Module ICMP Ping</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Templates/Network devices</name>
+                </group>
+                <group>
+                    <name>Zyxel</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>2d4dc98aeefd45279d02398dd072f212</uuid>
+                    <name>SNMP status</name>
+                    <type>INTERNAL</type>
+                    <key>zabbix[host,snmp,available]</key>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Status</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>f3d674e8607d46de94f7e55641463c3c</uuid>
+                            <expression>max(/Template ZyXel ZyWALL USG 200/zabbix[host,snmp,available],5m)=0</expression>
+                            <name>SNMP availability</name>
+                            <priority>DISASTER</priority>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template ZyXel ZyWALL USG 200/icmpping,#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>aaa0a7ad288c4e80a5dbb0a88ff74513</uuid>
+                    <name>CPU usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.4.0</snmp_oid>
+                    <key>zyxel.cpu</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>d807cde956db4c17bfc0d35db8a9ae4a</uuid>
+                            <expression>min(/Template ZyXel ZyWALL USG 200/zyxel.cpu,#5)&gt;85</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>min(/Template ZyXel ZyWALL USG 200/zyxel.cpu,#5)&lt;80</recovery_expression>
+                            <name>CPU load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>135f1cdc60ad49c39cdc1d7ac2db6bb8</uuid>
+                    <name>Firmware version</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.6.0</snmp_oid>
+                    <key>zyxel.firmware</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>SERIALNO_A</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>4de72e54aef4410c8678fcb8aa716ac9</uuid>
+                    <name>Flesh usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.6.0</snmp_oid>
+                    <key>zyxel.flesh</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>60c6cb0245ef4bf4b5a6f32a7921d681</uuid>
+                            <expression>max(/Template ZyXel ZyWALL USG 200/zyxel.flesh,#3)&gt;80</expression>
+                            <name>Flesh load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>85c6bf3d6bba434dbe6ef2fc35ad55c5</uuid>
+                    <name>Model</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
+                    <key>zyxel.model</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <inventory_link>TYPE_FULL</inventory_link>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>76273405845b4d23ab268ac41b6c6dd2</uuid>
+                    <name>RAM usage</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.2.5.0</snmp_oid>
+                    <key>zyxel.ram</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>fd7b728a0ef6409fa09aba4661fdd16b</uuid>
+                            <expression>min(/Template ZyXel ZyWALL USG 200/zyxel.ram,#5)&gt;80</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>max(/Template ZyXel ZyWALL USG 200/zyxel.ram,#5)&lt;75</recovery_expression>
+                            <name>Memory load on {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>c8e72e0fe8994635b265c5d9eb822496</uuid>
+                    <name>Serial number</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.15.3.1.12.0</snmp_oid>
+                    <key>zyxel.serial</key>
+                    <delay>1d</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>6695271e87274193aa1d22353f36e420</uuid>
+                    <name>Active session</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.890.1.6.22.1.6.0</snmp_oid>
+                    <key>zyxel.sessions</key>
+                    <delay>30</delay>
+                    <history>30d</history>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>db1526c5b72941afa280e4bfc47e3bce</uuid>
+                            <expression>min(/Template ZyXel ZyWALL USG 200/zyxel.sessions,#5)&gt;3000</expression>
+                            <name>Active session on {HOST.NAME}</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>0989b82a01214d249381b3903a02c80f</uuid>
+                    <name>System Name</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.1.5.0</snmp_oid>
+                    <key>zyxel.sysname</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>07e2fbf97a8347f6933f1e8203c46e33</uuid>
+                    <name>Uptime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.3.0</snmp_oid>
+                    <key>zyxel.uptime</key>
+                    <delay>60</delay>
+                    <history>30d</history>
+                    <units>uptime</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>0.01</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Information</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>4515e36398394d2ab86241902b968ab2</uuid>
+                    <name>Network interface discovery</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},IF-MIB::ifDescr]</snmp_oid>
+                    <key>ifDescr</key>
+                    <delay>1h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>eth*</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>9af2acf014a9415cae690b117d1b01c4</uuid>
+                            <name>Incoming traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifInOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifInOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>73abcc47c3014360912f128f1ddbb971</uuid>
+                            <name>Outgoing traffic on interface $1</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>IF-MIB::ifOutOctets.{#SNMPINDEX}</snmp_oid>
+                            <key>ifOutOctets[{#SNMPVALUE}]</key>
+                            <delay>30</delay>
+                            <history>30d</history>
+                            <units>bps</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Traffic Information</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>ad1368fd3c8b433289cb0d302ede4e78</uuid>
+                            <name>Traffic on interface {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template ZyXel ZyWALL USG 200</host>
+                                        <key>ifInOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template ZyXel ZyWALL USG 200</host>
+                                        <key>ifOutOctets[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <uuid>23aae82a4a6f4bbea3a2813b2eaecafa</uuid>
+            <name>CPU, RAM, Flesh usage (%)</name>
+            <graph_items>
+                <graph_item>
+                    <color>BB0000</color>
+                    <item>
+                        <host>Template ZyXel ZyWALL USG 200</host>
+                        <key>zyxel.cpu</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>00CC00</color>
+                    <item>
+                        <host>Template ZyXel ZyWALL USG 200</host>
+                        <key>zyxel.flesh</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template ZyXel ZyWALL USG 200</host>
+                        <key>zyxel.ram</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>9c012f74c8df4b10914ef8d6c427a4f5</uuid>
+            <name>CPU, RAM, Flesh usage (%)</name>
+            <graph_items>
+                <graph_item>
+                    <color>BB0000</color>
+                    <item>
+                        <host>Template ZyXel Switch GS1900</host>
+                        <key>zyxel.cpu</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template ZyXel Switch GS1900</host>
+                        <key>zyxel.ram</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <uuid>716b21d1f21449ac8f1aea27ef8f70bf</uuid>
+            <name>CPU, RAM, Flesh usage (%)</name>
+            <graph_items>
+                <graph_item>
+                    <color>BB0000</color>
+                    <item>
+                        <host>Template ZyXel Access Point NWA</host>
+                        <key>zyxel.cpu</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template ZyXel Access Point NWA</host>
+                        <key>zyxel.ram</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
