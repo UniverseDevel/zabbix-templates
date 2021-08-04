@@ -12,9 +12,10 @@ Each device has two templates to choose from, one is using HTTP calls to collect
 
 **Requirments**: Zabbix Server, Zabbix Agent (any), Shelly device  
 **Host interface**: Type "Agent" with IP/DNS pointing to Shelly device with any Port (leave default).  
-**Macros**: Macros in this temaplte are only needed when device has configured username and password.
+**Macros**: Macros in this temaplte are only needed when device has configured username and password. Macro "{$EC_EM_CONSUMPTION}" can be set to total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data. This value will allow calcucaltion of estimate value on your electrometer in case Shelly 3EM is measuring your main breaker, for this measurment enable item "Electric company electrometer estimate" after you set this macro.
 - "{$SHELLY_USER}": optional, default: "admin"
-- "{$SHELLY_PASS}": optional, default: ""
+- "{$SHELLY_PASS}": optional, default: ""  
+- "{$EC_EM_CONSUMPTION}": optional, default: "0"
 
 # How to configure MQTT templates
 
@@ -23,11 +24,12 @@ Each device has two templates to choose from, one is using HTTP calls to collect
 **Agent configuration**: Agent requires parameter "Hostname" to contain name of your Zabbix host that you create with this tempalte linked (multiple Hostnames can be separated with comma ","). This is due to MQTT plugin in Zabbix Agent being Active monitoring.  
 **Host name**: Same as value provided in Zabbix Agent 2 configuration in parameter "Hostname".  
 **Host interface**: Type "Agent" with IP/DNS and Port pointing to Zabbix Agent 2.  
-**Macros**: Macro "{$MQTT_DEVICE_ID}" is mandatory and can be obtained from Shelly device while enabling MQTT (you can check "Use custom MQTT prefix" to display current value, or you can set your own, just make it 25 characters or less to avoid problems). Other macros are only needed when your MQTT broker is on different location or when you configured useranme and password for your broker.
+**Macros**: Macro "{$MQTT_DEVICE_ID}" is mandatory and can be obtained from Shelly device while enabling MQTT (you can check "Use custom MQTT prefix" to display current value, or you can set your own, just make it 25 characters or less to avoid problems). Other macros are only needed when your MQTT broker is on different location or when you configured useranme and password for your broker. Macro "{$EC_EM_CONSUMPTION}" can be set to total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data. This value will allow calcucaltion of estimate value on your electrometer in case Shelly 3EM is measuring your main breaker, for this measurment enable item "Electric company electrometer estimate" after you set this macro.
 - "{$MQTT_DEVICE_ID}": **mandatory**, default: ""
 - "{$MQTT_BROKER_HOST}": optional, default: "tcp://localhost:1883"
 - "{$MQTT_BROKER_USER}": optional, default: ""
-- "{$MQTT_BROKER_PASS}": optional, default: ""
+- "{$MQTT_BROKER_PASS}": optional, default: ""  
+- "{$EC_EM_CONSUMPTION}": optional, default: "0"
 
 # Important notes
 
