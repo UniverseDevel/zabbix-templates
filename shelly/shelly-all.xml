@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-08-02T19:09:19Z</date>
+    <date>2021-08-04T09:49:48Z</date>
     <groups>
         <group>
             <uuid>f609ef9a7ec748ae8ceb88ad929b7613</uuid>
@@ -206,6 +206,95 @@
                             </tags>
                         </trigger>
                     </triggers>
+                </item>
+                <item>
+                    <uuid>f31be186fee947e2a83309d5c41ecc7d</uuid>
+                    <name>Electric company electrometer estimate</name>
+                    <type>DEPENDENT</type>
+                    <key>ec_em_estimate</key>
+                    <delay>0</delay>
+                    <history>1825d</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>Wh</units>
+                    <description>Estimated value of electric company electrometer. This value may differ from real value due to device restarts or incorrect measurements. This estimate is only useful when your Shelly 3EM is measuring power consumption on the main breaker.
+
+For this value to show correct estimate, you have to take a note of how many Wh were on electric company electrometer when you reset Shelly 3EM data and put this value into macro {$EC_EM_CONSUMPTION}.</description>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>var json_data = JSON.parse(value);
+
+var ec_emeter_offset  = 0;
+
+var emeter_a_consumed = 0;
+var emeter_b_consumed = 0;
+var emeter_c_consumed = 0;
+var emeter_n_consumed = 0;
+
+var emeter_a_returned = 0;
+var emeter_b_returned = 0;
+var emeter_c_returned = 0;
+var emeter_n_returned = 0;
+
+var ec_em_consumed= '{$EC_EM_CONSUMPTION}';
+
+if (ec_em_consumed == '' || ec_em_consumed == null || ec_em_consumed === undefined) {
+  ec_em_consumed = 0;
+} else {
+  try {
+    ec_em_consumed = parseInt(ec_em_consumed);
+  } catch (e) {
+    ec_em_consumed = 0;
+  }
+}
+
+ec_emeter_offset = ec_em_consumed;
+
+if (json_data.emeters[0]) {
+  emeter_a_consumed = json_data.emeters[0].total;
+}
+if (json_data.emeters[1]) {
+  emeter_b_consumed = json_data.emeters[1].total;
+}
+if (json_data.emeters[2]) {
+  emeter_c_consumed = json_data.emeters[2].total;
+}
+if (json_data.emeters[3]) {
+  emeter_n_consumed = json_data.emeters[3].total;
+}
+
+if (json_data.emeters[0]) {
+  emeter_a_returned = json_data.emeters[0].total_returned;
+}
+if (json_data.emeters[1]) {
+  emeter_b_returned = json_data.emeters[1].total_returned;
+}
+if (json_data.emeters[2]) {
+  emeter_c_returned = json_data.emeters[2].total_returned;
+}
+if (json_data.emeters[3]) {
+  emeter_n_returned = json_data.emeters[3].total_returned;
+}
+
+return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_consumed + emeter_n_consumed) - (emeter_a_returned + emeter_b_returned + emeter_c_returned + emeter_n_returned));</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Electrometer</value>
+                        </tag>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Electrometer summary</value>
+                        </tag>
+                    </tags>
                 </item>
                 <item>
                     <uuid>93aeda6f098b4641b570ff9bb6d5d208</uuid>
@@ -1590,7 +1679,7 @@
                     <delay>0</delay>
                     <history>1825d</history>
                     <value_type>FLOAT</value_type>
-                    <units>W</units>
+                    <units>Wh</units>
                     <preprocessing>
                         <step>
                             <type>JAVASCRIPT</type>
@@ -1670,9 +1759,9 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>total_returned</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1825d</history>
                     <value_type>FLOAT</value_type>
-                    <units>W</units>
+                    <units>Wh</units>
                     <preprocessing>
                         <step>
                             <type>JAVASCRIPT</type>
@@ -2033,6 +2122,11 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
             </items>
             <macros>
                 <macro>
+                    <macro>{$EC_EM_CONSUMPTION}</macro>
+                    <value>0</value>
+                    <description>Total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data.</description>
+                </macro>
+                <macro>
                     <macro>{$SHELLY_PASS}</macro>
                     <type>SECRET_TEXT</type>
                     <description>Device password, if configured</description>
@@ -2279,6 +2373,95 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                             </tags>
                         </trigger>
                     </triggers>
+                </item>
+                <item>
+                    <uuid>8ee4492271f7496696ba3b2b6cfaed05</uuid>
+                    <name>Electric company electrometer estimate</name>
+                    <type>DEPENDENT</type>
+                    <key>ec_em_estimate</key>
+                    <delay>0</delay>
+                    <history>1825d</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>Wh</units>
+                    <description>Estimated value of electric company electrometer. This value may differ from real value due to device restarts or incorrect measurements. This estimate is only useful when your Shelly 3EM is measuring power consumption on the main breaker.
+
+For this value to show correct estimate, you have to take a note of how many Wh were on electric company electrometer when you reset Shelly 3EM data and put this value into macro {$EC_EM_CONSUMPTION}.</description>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>var json_data = JSON.parse(value);
+
+var ec_emeter_offset  = 0;
+
+var emeter_a_consumed = 0;
+var emeter_b_consumed = 0;
+var emeter_c_consumed = 0;
+var emeter_n_consumed = 0;
+
+var emeter_a_returned = 0;
+var emeter_b_returned = 0;
+var emeter_c_returned = 0;
+var emeter_n_returned = 0;
+
+var ec_em_consumed= '{$EC_EM_CONSUMPTION}';
+
+if (ec_em_consumed == '' || ec_em_consumed == null || ec_em_consumed === undefined) {
+  ec_em_consumed = 0;
+} else {
+  try {
+    ec_em_consumed = parseInt(ec_em_consumed);
+  } catch (e) {
+    ec_em_consumed = 0;
+  }
+}
+
+ec_emeter_offset = ec_em_consumed;
+
+if (json_data.emeters[0]) {
+  emeter_a_consumed = json_data.emeters[0].total;
+}
+if (json_data.emeters[1]) {
+  emeter_b_consumed = json_data.emeters[1].total;
+}
+if (json_data.emeters[2]) {
+  emeter_c_consumed = json_data.emeters[2].total;
+}
+if (json_data.emeters[3]) {
+  emeter_n_consumed = json_data.emeters[3].total;
+}
+
+if (json_data.emeters[0]) {
+  emeter_a_returned = json_data.emeters[0].total_returned;
+}
+if (json_data.emeters[1]) {
+  emeter_b_returned = json_data.emeters[1].total_returned;
+}
+if (json_data.emeters[2]) {
+  emeter_c_returned = json_data.emeters[2].total_returned;
+}
+if (json_data.emeters[3]) {
+  emeter_n_returned = json_data.emeters[3].total_returned;
+}
+
+return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_consumed + emeter_n_consumed) - (emeter_a_returned + emeter_b_returned + emeter_c_returned + emeter_n_returned));</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Electrometer</value>
+                        </tag>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Electrometer summary</value>
+                        </tag>
+                    </tags>
                 </item>
                 <item>
                     <uuid>b3d5337b8013479481132651c01cba02</uuid>
@@ -3647,9 +3830,9 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>total_consuption</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1825d</history>
                     <value_type>FLOAT</value_type>
-                    <units>W</units>
+                    <units>Wh</units>
                     <preprocessing>
                         <step>
                             <type>JAVASCRIPT</type>
@@ -3729,9 +3912,9 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>total_returned</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1825d</history>
                     <value_type>FLOAT</value_type>
-                    <units>W</units>
+                    <units>Wh</units>
                     <preprocessing>
                         <step>
                             <type>JAVASCRIPT</type>
@@ -4091,6 +4274,11 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                 </item>
             </items>
             <macros>
+                <macro>
+                    <macro>{$EC_EM_CONSUMPTION}</macro>
+                    <value>0</value>
+                    <description>Total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data.</description>
+                </macro>
                 <macro>
                     <macro>{$MQTT_BROKER_HOST}</macro>
                     <value>tcp://localhost:1883</value>
