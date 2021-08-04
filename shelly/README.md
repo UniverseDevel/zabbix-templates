@@ -15,7 +15,7 @@ Each device has two templates to choose from, one is using HTTP calls to collect
 **Macros**: Macros in this temaplte are only needed when device has configured username and password. Macro "{$EC_EM_CONSUMPTION}" can be set to total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data. This value will allow calcucaltion of estimate value on your electrometer in case Shelly 3EM is measuring your main breaker, for this measurment enable item "Electric company electrometer estimate" after you set this macro.
 - "{$SHELLY_USER}": optional, default: "admin"
 - "{$SHELLY_PASS}": optional, default: ""  
-- "{$EC_EM_CONSUMPTION}": optional, default: "0"
+- "{$EC_EM_CONSUMPTION}": optional, default: "0", Shelly 3EM only
 
 # How to configure MQTT templates
 
@@ -29,7 +29,7 @@ Each device has two templates to choose from, one is using HTTP calls to collect
 - "{$MQTT_BROKER_HOST}": optional, default: "tcp://localhost:1883"
 - "{$MQTT_BROKER_USER}": optional, default: ""
 - "{$MQTT_BROKER_PASS}": optional, default: ""  
-- "{$EC_EM_CONSUMPTION}": optional, default: "0"
+- "{$EC_EM_CONSUMPTION}": optional, default: "0", Shelly 3EM only
 
 # Important notes
 
