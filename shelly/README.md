@@ -44,3 +44,4 @@ https://shelly-api-docs.shelly.cloud/
 https://ticket.shelly.support/  
 https://www.zabbix.com/integrations/mqtt  
 https://www.zabbix.com/documentation/current/manual/concepts/agent2  
+https://www.facebook.com/groups/ShellyIoTCommunitySupport
