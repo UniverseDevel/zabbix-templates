@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-08-02T18:59:26Z</date>
+    <date>2021-10-06T11:10:37Z</date>
     <groups>
         <group>
             <uuid>f609ef9a7ec748ae8ceb88ad929b7613</uuid>
@@ -14,9 +14,9 @@
     </groups>
     <templates>
         <template>
-            <uuid>161c4bb799a54116bd8c019a9680a6a7</uuid>
-            <template>Template Shelly Motion - MQTT</template>
-            <name>Template Shelly Motion - MQTT</name>
+            <uuid>4d433c4a26c14a8bbb6651a041f2edb5</uuid>
+            <template>Template Shelly HT</template>
+            <name>Template Shelly HT</name>
             <groups>
                 <group>
                     <name>Shelly</name>
@@ -27,11 +27,12 @@
             </groups>
             <items>
                 <item>
-                    <uuid>0c3b9ccf8b844726b10e2ebbd9387a2d</uuid>
+                    <uuid>6677fff62b48467387f19f193ffc9160</uuid>
                     <name>Skipped actions</name>
                     <type>DEPENDENT</type>
                     <key>actions_stats.skipped</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -41,7 +42,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -51,8 +52,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>bfd4d51b60f342b2a5c79c84703ba9fd</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/actions_stats.skipped)&gt;0</expression>
+                            <uuid>1ceb6a2b2df44a43af833707a4d67ee1</uuid>
+                            <expression>change(/Template Shelly HT/actions_stats.skipped)&gt;0</expression>
                             <name>At least one action has been skipped</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -65,12 +66,17 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>99c7bd9589814bc0b4f1e91613846c33</uuid>
+                    <uuid>b65c24b056274297bfc055bd70c280a9</uuid>
                     <name>Battery percentage</name>
                     <type>DEPENDENT</type>
                     <key>bat.value</key>
                     <delay>0</delay>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
                     <units>%</units>
+                    <valuemap>
+                        <name>Battery</name>
+                    </valuemap>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -80,7 +86,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -90,9 +96,9 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>32c4c593558946128bede0a90ef14ec2</uuid>
-                            <expression>last(/Template Shelly Motion - MQTT/bat.value)&lt;=10</expression>
-                            <name>Sensor battery is low</name>
+                            <uuid>695d2997ae564fa081a32cbe5dbd993a</uuid>
+                            <expression>last(/Template Shelly HT/bat.value)&lt;=10 and last(/Template Shelly HT/bat.value)&lt;&gt;-1</expression>
+                            <name>Device battery is low</name>
                             <priority>HIGH</priority>
                             <tags>
                                 <tag>
@@ -102,9 +108,9 @@
                             </tags>
                         </trigger>
                         <trigger>
-                            <uuid>1bb40a6a17754bcaad3b7c95b63c15b2</uuid>
-                            <expression>last(/Template Shelly Motion - MQTT/bat.value)&gt;10 and last(/Template Shelly Motion - MQTT/bat.value)&lt;=20</expression>
-                            <name>Sensor battery is low</name>
+                            <uuid>ae43fcd114a047bc98d8458c26ead669</uuid>
+                            <expression>last(/Template Shelly HT/bat.value)&gt;10 and last(/Template Shelly HT/bat.value)&lt;=20</expression>
+                            <name>Device battery is low</name>
                             <priority>AVERAGE</priority>
                             <tags>
                                 <tag>
@@ -116,11 +122,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>549efb1bb1504d728adb1debf0762895</uuid>
+                    <uuid>a6a2402c8ccf4d2097252110ce83d884</uuid>
                     <name>Battery voltage</name>
                     <type>DEPENDENT</type>
                     <key>bat.voltage</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>V</units>
                     <preprocessing>
@@ -132,7 +139,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -142,11 +149,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>41f01089f3714e83a29cecdfc6b9a872</uuid>
+                    <uuid>94d348bb94e3460a8da585260f1b2724</uuid>
                     <name>System configuration changes</name>
                     <type>DEPENDENT</type>
                     <key>cfg_changed_cnt</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -156,7 +164,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -166,8 +174,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>95138ed580b14e3d837e57e4f728ccaf</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/cfg_changed_cnt)&gt;0</expression>
+                            <uuid>bc2fcbf85b934224a68ff5eae8f85703</uuid>
+                            <expression>change(/Template Shelly HT/cfg_changed_cnt)&gt;0</expression>
                             <name>System configuration has been changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -180,37 +188,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>37825dc185e34e518fc9a4ca6e076c97</uuid>
-                    <name>Charger connected</name>
-                    <type>DEPENDENT</type>
-                    <key>charger</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.charger</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>System</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>9819ec9a9ff840c9b842d1184f0dc32e</uuid>
+                    <uuid>b8fb9bd837fe4233bdb4d4a2ea14b6b6</uuid>
                     <name>Cloud connected</name>
                     <type>DEPENDENT</type>
                     <key>cloud.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -222,7 +205,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -236,8 +219,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>33c5849f7d4144dc90c0eac6b622a6c8</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/cloud.connected)&lt;&gt;0</expression>
+                            <uuid>29ff6420b95f4260b96b2be357b203fd</uuid>
+                            <expression>change(/Template Shelly HT/cloud.connected)&lt;&gt;0</expression>
                             <name>Cloud connection state has changed</name>
                             <priority>AVERAGE</priority>
                             <tags>
@@ -254,11 +237,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>4dfa7550909842c7a06dc7fd0448e4b5</uuid>
+                    <uuid>17811b04b891486cbc0a725e01cff68a</uuid>
                     <name>Cloud enabled</name>
                     <type>DEPENDENT</type>
                     <key>cloud.enabled</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -270,7 +254,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -284,8 +268,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>67534c87a78c4074b26d74422f070682</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/cloud.enabled)&lt;&gt;0</expression>
+                            <uuid>0deb89523e7045baae64d8b43e22cdc1</uuid>
+                            <expression>change(/Template Shelly HT/cloud.enabled)&lt;&gt;0</expression>
                             <name>Cloud configuration has changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -302,11 +286,41 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>d3e4b23003c7415f8bd256f4b0a28ab8</uuid>
+                    <uuid>a210364f925141b68bd376bea9afc212</uuid>
+                    <name>WiFi connect retries</name>
+                    <type>DEPENDENT</type>
+                    <key>connect_retries</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.connect_retries</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>WiFi</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>22af458927df43888f7408812df87474</uuid>
                     <name>File system free size</name>
                     <type>DEPENDENT</type>
                     <key>fs_free</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -317,7 +331,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -327,11 +341,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>33946e25c42b4fc0a393355905174b65</uuid>
+                    <uuid>f1b5a9882bd64bb99201d6e327131c16</uuid>
                     <name>File system total size</name>
                     <type>DEPENDENT</type>
                     <key>fs_size</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -342,7 +357,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -352,37 +367,43 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>a7b7e0b77dcb49abbcc86f879c290db3</uuid>
-                    <name>Lux illumination</name>
-                    <type>DEPENDENT</type>
-                    <key>lux.illumination</key>
-                    <delay>0</delay>
+                    <uuid>3c2ea61904fe43f589ac36655960dac6</uuid>
+                    <name>Data collector - HTTP</name>
+                    <type>HTTP_AGENT</type>
+                    <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    <delay>30</delay>
+                    <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$SHELLY_USER}</username>
+                    <password>{$SHELLY_PASS}</password>
+                    <description>Collect data from Shelly device status API.</description>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.lux.illumination</parameter>
+                                <parameter>$.body</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
-                    <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
-                    </master_item>
+                    <url>http://{$SHELLY_HOST}/status</url>
+                    <follow_redirects>NO</follow_redirects>
+                    <output_format>JSON</output_format>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Lux sensor</value>
+                            <value>Data collection</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>f6a207578c99445b861d8cad731dcb87</uuid>
-                    <name>Lux sensor self-check</name>
+                    <uuid>e52e3f7438ae4b509bf32638838c558c</uuid>
+                    <name>Humidity self-check</name>
                     <type>DEPENDENT</type>
-                    <key>lux.is_valid</key>
+                    <key>hum.is_valid</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <valuemap>
                         <name>Self-check</name>
                     </valuemap>
@@ -390,7 +411,7 @@
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.lux.is_valid</parameter>
+                                <parameter>$.hum.is_valid</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -401,49 +422,196 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Lux sensor</value>
+                            <value>Humidity</value>
                         </tag>
                         <tag>
                             <tag>Application</tag>
-                            <value>Sefl-check</value>
+                            <value>Self-check</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>eff2eb7166784deb87c1b5fc24f75d7a</uuid>
-                    <name>Lux value</name>
+                    <uuid>5fbfd8646bf647fa828b9ebd03f37971</uuid>
+                    <name>Humidity percentage</name>
                     <type>DEPENDENT</type>
-                    <key>lux.value</key>
+                    <key>hum.value</key>
                     <delay>0</delay>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.lux.value</parameter>
+                                <parameter>$.hum.value</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Lux sensor</value>
+                            <value>Humidity</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>111ed2d90d7949bd867b0242d36cf4b5</uuid>
+                    <uuid>67890100672942aebb1ad02069fac76f</uuid>
+                    <name>ICMP loss</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingloss[{$SHELLY_HOST},3,5000,68,5000]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>0cdf7c2e7c924f39b5ce9ba9e5dbfb6d</uuid>
+                            <expression>min(/Template Shelly HT/icmppingloss[{$SHELLY_HOST},3,5000,68,5000],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly HT/icmppingloss[{$SHELLY_HOST},3,5000,68,5000],5m)&lt;100</expression>
+                            <name>High ICMP ping loss</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly HT/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>bb3bc9c4fb2d4ec9b68e83036b1646b8</uuid>
+                    <name>ICMP response time</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingsec[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>5b1a756a5e8c4dfeb735b9c8ec3738c2</uuid>
+                            <expression>avg(/Template Shelly HT/icmppingsec[{$SHELLY_HOST}],5m)&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
+                            <name>High ICMP ping response time</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>High ICMP ping loss</name>
+                                    <expression>min(/Template Shelly HT/icmppingloss[{$SHELLY_HOST},3,5000,68,5000],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly HT/icmppingloss[{$SHELLY_HOST},3,5000,68,5000],5m)&lt;100</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly HT/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>76b8bb9245b545518089d961de52c668</uuid>
+                    <name>ICMP ping</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>bb94cce18346485a84ea95dc4576676d</uuid>
+                            <expression>max(/Template Shelly HT/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                            <name>Unavailable by ICMP ping</name>
+                            <priority>HIGH</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.
+Last three attempts returned timeout.  Please check device connectivity.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>786ff44cf47140d7877632246eec80ff</uuid>
+                    <name>Device self-check</name>
+                    <type>DEPENDENT</type>
+                    <key>is_valid</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <valuemap>
+                        <name>Self-check</name>
+                    </valuemap>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.is_valid</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>BOOL_TO_DECIMAL</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Self-check</value>
+                        </tag>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>2283731198974006bc0e6cfbdc270f87</uuid>
                     <name>MQTT connected</name>
                     <type>DEPENDENT</type>
                     <key>mqtt.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -455,7 +623,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -465,8 +633,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>8332e83752ed443ab0aba8ab48c97b9b</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/mqtt.connected)&lt;&gt;0</expression>
+                            <uuid>cf15d013c90e4c989266abd37a3e0620</uuid>
+                            <expression>change(/Template Shelly HT/mqtt.connected)&lt;&gt;0</expression>
                             <name>MQTT connection state has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -479,8 +647,8 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>9d85d0033e60475fa89ce4a5613644c9</uuid>
-                    <name>Status data</name>
+                    <uuid>e5f27f38a98d4fc5a7c3956fad0c93bd</uuid>
+                    <name>Data collector - MQTT</name>
                     <type>ZABBIX_ACTIVE</type>
                     <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
                     <delay>0</delay>
@@ -494,10 +662,127 @@
                             <value>Data collection</value>
                         </tag>
                     </tags>
+                </item>
+                <item>
+                    <uuid>8c29e129b8a2498c9003cb01690e440c</uuid>
+                    <name>RAM free</name>
+                    <type>DEPENDENT</type>
+                    <key>ram_free</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.ram_free</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3ab6ab9f8a8d470e96152ff86acd6759</uuid>
+                    <name>RAM total</name>
+                    <type>DEPENDENT</type>
+                    <key>ram_total</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.ram_total</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0a3cc77a730a4c6aa44046e9490b3a8f</uuid>
+                    <name>Sensor error</name>
+                    <type>DEPENDENT</type>
+                    <key>sensor_error</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <valuemap>
+                        <name>Sensor error</name>
+                    </valuemap>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.sensor_error</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
                     <triggers>
                         <trigger>
-                            <uuid>9d2c328904564824b2083baca2875f6f</uuid>
-                            <expression>nodata(/Template Shelly Motion - MQTT/mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}],180s)=1</expression>
+                            <uuid>caac79ac6fe24b33829220497a8a88ae</uuid>
+                            <expression>last(/Template Shelly HT/sensor_error)&lt;&gt;-1</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Template Shelly HT/sensor_error)=-1</recovery_expression>
+                            <name>Device has errors</name>
+                            <priority>HIGH</priority>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>8667401b7dc7431eadbade6181d0d7e3</uuid>
+                    <name>Status data</name>
+                    <type>DEPENDENT</type>
+                    <key>status</key>
+                    <delay>0</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Collect data from HTTP or MQTT data collector items.</description>
+                    <master_item>
+                        <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Data collection</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>6bc02fa15b0e467281e7c43d2cc8e2f5</uuid>
+                            <expression>nodata(/Template Shelly HT/status,120s)=1</expression>
                             <name>No data received</name>
                             <priority>HIGH</priority>
                             <tags>
@@ -510,103 +795,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>d01729798c1e4571b70f5501ea047171</uuid>
-                    <name>RAM free</name>
+                    <uuid>717fa9bfe68b42c9aeae28f675a3db24</uuid>
+                    <name>Temperature self-check</name>
                     <type>DEPENDENT</type>
-                    <key>ram_free</key>
+                    <key>tmp.is_valid</key>
                     <delay>0</delay>
-                    <units>B</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.ram_free</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>System</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>a7cca86a44854a44a2168d5fe337c38a</uuid>
-                    <name>RAM total</name>
-                    <type>DEPENDENT</type>
-                    <key>ram_total</key>
-                    <delay>0</delay>
-                    <units>B</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.ram_total</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>System</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>3bc28629a25f4691bcacdc9e38ed0fa4</uuid>
-                    <name>Motion sensor active</name>
-                    <type>DEPENDENT</type>
-                    <key>sensor.active</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.sensor.active</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Motion sensor</value>
-                        </tag>
-                    </tags>
-                    <triggers>
-                        <trigger>
-                            <uuid>25978a3ce04947b197fa5e6210da29b8</uuid>
-                            <expression>last(/Template Shelly Motion - MQTT/sensor.active)=&quot;true&quot;</expression>
-                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                            <recovery_expression>last(/Template Shelly Motion - MQTT/sensor.active)=&quot;false&quot;</recovery_expression>
-                            <name>Motion sensor active</name>
-                            <priority>INFO</priority>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Motion sensor</value>
-                                </tag>
-                            </tags>
-                        </trigger>
-                    </triggers>
-                </item>
-                <item>
-                    <uuid>a5a7a9a20f1d40c18ee3b51fee767515</uuid>
-                    <name>Motion sensor self-check</name>
-                    <type>DEPENDENT</type>
-                    <key>sensor.is_valid</key>
-                    <delay>0</delay>
+                    <history>365d</history>
                     <valuemap>
                         <name>Self-check</name>
                     </valuemap>
@@ -614,7 +808,7 @@
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.sensor.is_valid</parameter>
+                                <parameter>$.tmp.is_valid</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -625,91 +819,80 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Motion sensor</value>
+                            <value>Self-check</value>
                         </tag>
                         <tag>
                             <tag>Application</tag>
-                            <value>Sefl-check</value>
+                            <value>Temperature</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>799855a06c754124b62129c04e51db33</uuid>
-                    <name>Motion detection</name>
+                    <uuid>23eef644f7774f9684296a7f51f5204c</uuid>
+                    <name>Temperature in Celsius</name>
                     <type>DEPENDENT</type>
-                    <key>sensor.motion</key>
+                    <key>tmp.tC</key>
                     <delay>0</delay>
-                    <valuemap>
-                        <name>Motion</name>
-                    </valuemap>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>°C</units>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.sensor.motion</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
+                                <parameter>$.tmp.tC</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Motion sensor</value>
+                            <value>Temperature</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>8053e3caae934b18b1c9312f06bccbb0</uuid>
-                    <name>Tamper detection</name>
+                    <uuid>99a3185af0fb454f821e943847a23433</uuid>
+                    <name>Temperature in Fahrenheit</name>
                     <type>DEPENDENT</type>
-                    <key>sensor.vibration</key>
+                    <key>tmp.tF</key>
                     <delay>0</delay>
-                    <valuemap>
-                        <name>Tampering</name>
-                    </valuemap>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>°F</units>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.sensor.vibration</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
+                                <parameter>$.tmp.tF</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Motion sensor</value>
+                            <value>Temperature</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>8979e32eb18646ce87bad3a5f745409c</uuid>
+                    <uuid>59d9e8005a544a8890ace2cfc983e7cf</uuid>
                     <name>Device time</name>
                     <type>DEPENDENT</type>
                     <key>unixtime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>unixtime</units>
                     <preprocessing>
                         <step>
@@ -720,7 +903,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -730,8 +913,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>a3c075d1519d453a93eeffe4dd6f85c1</uuid>
-                            <expression>fuzzytime(/Template Shelly Motion - MQTT/unixtime,60s)=0</expression>
+                            <uuid>4912d6f4314c49e1b440d83be543c917</uuid>
+                            <expression>fuzzytime(/Template Shelly HT/unixtime,60s)=0</expression>
                             <name>Time is out of sync</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -744,11 +927,40 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>035c00e4aedc4a53995f8a77066ce7bd</uuid>
+                    <uuid>665d8941569c47a2803ab81b7e187581</uuid>
+                    <name>Firmware beta version</name>
+                    <type>DEPENDENT</type>
+                    <key>update.beta_version</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.beta_version</parameter>
+                            </parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>db38a132a10e4223909fefeaf943cc7b</uuid>
                     <name>Update available</name>
                     <type>DEPENDENT</type>
                     <key>update.has_update</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -760,7 +972,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -770,8 +982,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>9b1a6c669de6411ebfed8ee793b9beed</uuid>
-                            <expression>last(/Template Shelly Motion - MQTT/update.has_update)=&quot;true&quot;</expression>
+                            <uuid>15bd8ab9230443aa8304ab41e73eefea</uuid>
+                            <expression>last(/Template Shelly HT/update.has_update)=&quot;true&quot;</expression>
                             <name>Update available</name>
                             <priority>INFO</priority>
                             <tags>
@@ -784,11 +996,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>a48603a3536643d1bf38298690c410f8</uuid>
+                    <uuid>cd2a7d8dfcb8477c8736161c922cbe9d</uuid>
                     <name>Firmware new version</name>
                     <type>DEPENDENT</type>
                     <key>update.new_version</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -800,7 +1013,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -810,11 +1023,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>167f8e60be5744b0a85f9609dd34631b</uuid>
+                    <uuid>a5516be760924a0bb1d274760345a043</uuid>
                     <name>Firmware old version</name>
                     <type>DEPENDENT</type>
                     <key>update.old_version</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -826,7 +1040,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -836,8 +1050,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>893c7fe674c444ad80011d18541dc654</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/update.old_version)&lt;&gt;0</expression>
+                            <uuid>0b4643b2fa664c1aa831bc2b6bf9f521</uuid>
+                            <expression>change(/Template Shelly HT/update.old_version)&lt;&gt;0</expression>
                             <name>Version has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -850,11 +1064,39 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>59e42489916f4185849f8bfa58d22500</uuid>
+                    <uuid>066a84325a8c478e9bdc922f92c357d3</uuid>
+                    <name>Update status</name>
+                    <type>DEPENDENT</type>
+                    <key>update.status</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.status</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7c8710539d5947b28744f3a2b76b2976</uuid>
                     <name>Uptime</name>
                     <type>DEPENDENT</type>
                     <key>uptime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>uptime</units>
                     <preprocessing>
                         <step>
@@ -865,7 +1107,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -875,8 +1117,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>de2b7f66d229441480fdc2f39359af33</uuid>
-                            <expression>change(/Template Shelly Motion - MQTT/uptime)&lt;0</expression>
+                            <uuid>093a6e0f511d486dbd8066e4d8e2b607</uuid>
+                            <expression>change(/Template Shelly HT/uptime)&lt;0</expression>
                             <name>Device has been restarted</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -889,11 +1131,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>7287d9c1a7c94a5ab364aa2e3140829d</uuid>
+                    <uuid>da001b2e1d0347548bb2f91b5461f35b</uuid>
                     <name>WiFi connected</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -905,7 +1148,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -919,11 +1162,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7557163db8ce4bb292f0e7e262d7ea55</uuid>
+                    <uuid>dc5479db7b5b47fcb5cb3a165eb36719</uuid>
                     <name>WiFi IP</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ip</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -935,7 +1179,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -949,11 +1193,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>b2a774d369c54c1c9388ad79aa6b0e48</uuid>
+                    <uuid>364ec514e82f4d00b54547171f4e094c</uuid>
                     <name>WiFi RSSI</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.rssi</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <value_type>FLOAT</value_type>
                     <units>dBm</units>
                     <valuemap>
@@ -968,7 +1213,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -982,11 +1227,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>7c9cbf36eada4b6a91bc2d7ded63841c</uuid>
+                    <uuid>7b9a7be85b9a48a984963eda0e849f0a</uuid>
                     <name>WiFi SSID</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ssid</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -998,7 +1244,7 @@
                         </step>
                     </preprocessing>
                     <master_item>
-                        <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                        <key>status</key>
                     </master_item>
                     <tags>
                         <tag>
@@ -1013,6 +1259,14 @@
                 </item>
             </items>
             <macros>
+                <macro>
+                    <macro>{$ICMP_LOSS_WARN}</macro>
+                    <value>20</value>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
+                    <value>0.15</value>
+                </macro>
                 <macro>
                     <macro>{$MQTT_BROKER_HOST}</macro>
                     <value>tcp://localhost:1883</value>
@@ -1031,24 +1285,40 @@
                     <macro>{$MQTT_DEVICE_ID}</macro>
                     <description>Shelly device MQTT ID</description>
                 </macro>
+                <macro>
+                    <macro>{$SHELLY_HOST}</macro>
+                    <description>Device host</description>
+                </macro>
+                <macro>
+                    <macro>{$SHELLY_PASS}</macro>
+                    <type>SECRET_TEXT</type>
+                    <description>Device password, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$SHELLY_USER}</macro>
+                    <value>admin</value>
+                    <description>Device user, if configured</description>
+                </macro>
             </macros>
             <valuemaps>
                 <valuemap>
-                    <uuid>72537e98ecb741e7805afd7f3d494dfb</uuid>
-                    <name>Motion</name>
+                    <uuid>53111755d9624e279bcc0e0ef1af4d47</uuid>
+                    <name>Battery</name>
                     <mappings>
                         <mapping>
-                            <value>1</value>
-                            <newvalue>Motion</newvalue>
+                            <type>GREATER_OR_EQUAL</type>
+                            <value>0</value>
+                            <newvalue>Battery</newvalue>
                         </mapping>
                         <mapping>
-                            <value>0</value>
-                            <newvalue>No motion</newvalue>
+                            <type>LESS_OR_EQUAL</type>
+                            <value>-1</value>
+                            <newvalue>Power cable</newvalue>
                         </mapping>
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>1e4e762895464e00a3311572e4dfc65f</uuid>
+                    <uuid>403d042bf04643c5b63ea3cec39b91de</uuid>
                     <name>Received Signal Strength Indicator</name>
                     <mappings>
                         <mapping>
@@ -1079,7 +1349,7 @@
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>f09b01e65abe40f3a27976d80ebfec84</uuid>
+                    <uuid>5f084fb7b91f4305ab43fcbe80391434</uuid>
                     <name>Self-check</name>
                     <mappings>
                         <mapping>
@@ -1093,102 +1363,21 @@
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>e03b534f829447d395603c7ee1f94527</uuid>
-                    <name>Tampering</name>
+                    <uuid>855350c1e06946c9810800c0183ec078</uuid>
+                    <name>Sensor error</name>
                     <mappings>
                         <mapping>
-                            <value>1</value>
-                            <newvalue>Tamper</newvalue>
+                            <value>-1</value>
+                            <newvalue>No error</newvalue>
                         </mapping>
                         <mapping>
+                            <type>GREATER_OR_EQUAL</type>
                             <value>0</value>
-                            <newvalue>No tamper</newvalue>
+                            <newvalue>Error</newvalue>
                         </mapping>
                     </mappings>
                 </valuemap>
             </valuemaps>
         </template>
     </templates>
-    <triggers>
-        <trigger>
-            <uuid>74d8fe16f2764d31a003c8afed9e360c</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/sensor.motion)=1</expression>
-            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-            <recovery_expression>sum(/Template Shelly Motion - MQTT/sensor.motion,10m)=0 or last(/Template Shelly Motion - MQTT/sensor.active)=&quot;false&quot;</recovery_expression>
-            <name>Motion detected</name>
-            <priority>HIGH</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>Motion sensor</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>8cf9c39a72d846139565b5577f296da3</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/fs_free)&gt;=last(/Template Shelly Motion - MQTT/fs_size)*0.8 and last(/Template Shelly Motion - MQTT/fs_free)&lt;last(/Template Shelly Motion - MQTT/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>f53b6b1333e346e4b5356fdfb6a4163c</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/fs_free)&gt;=last(/Template Shelly Motion - MQTT/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>2d56f585ccd7473a821f07adfe4f8c60</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/ram_free)&gt;=last(/Template Shelly Motion - MQTT/ram_total)*0.8 and last(/Template Shelly Motion - MQTT/ram_free)&lt;last(/Template Shelly Motion - MQTT/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>5e9ed487d0f242328dbd7f702db79cfb</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/ram_free)&gt;=last(/Template Shelly Motion - MQTT/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>93ffcaf61d5e4017b4fb2c83c9bb4670</uuid>
-            <expression>last(/Template Shelly Motion - MQTT/sensor.vibration)=1 and last(/Template Shelly Motion - MQTT/sensor.active)=&quot;true&quot;</expression>
-            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-            <recovery_expression>sum(/Template Shelly Motion - MQTT/sensor.vibration,10m)=0 or last(/Template Shelly Motion - MQTT/sensor.active)=&quot;false&quot;</recovery_expression>
-            <name>Tampering detected</name>
-            <priority>HIGH</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>Motion sensor</value>
-                </tag>
-            </tags>
-        </trigger>
-    </triggers>
 </zabbix_export>

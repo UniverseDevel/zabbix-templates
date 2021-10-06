@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-08-02T18:59:43Z</date>
+    <date>2021-10-06T11:09:16Z</date>
     <groups>
         <group>
             <uuid>f609ef9a7ec748ae8ceb88ad929b7613</uuid>
@@ -14,14 +14,9 @@
     </groups>
     <templates>
         <template>
-            <uuid>42740ba2769246749725e554c85c1ce4</uuid>
-            <template>Template Shelly Plug and Plug-S</template>
-            <name>Template Shelly Plug and Plug-S</name>
-            <templates>
-                <template>
-                    <name>Template Module ICMP Ping</name>
-                </template>
-            </templates>
+            <uuid>2304f9f6bd8741cfa2fcca834ea45fa5</uuid>
+            <template>Template Shelly Bulb RGBW</template>
+            <name>Template Shelly Bulb RGBW</name>
             <groups>
                 <group>
                     <name>Shelly</name>
@@ -32,12 +27,12 @@
             </groups>
             <items>
                 <item>
-                    <uuid>91a3a9b4d6e042d9974f3f6da8533111</uuid>
+                    <uuid>487e9726eba04925ae11cfe8b9e5c487</uuid>
                     <name>Skipped actions</name>
                     <type>DEPENDENT</type>
                     <key>actions_stats.skipped</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -57,8 +52,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>ef2ec6de85e04718a580de0137ccde0a</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/actions_stats.skipped)&gt;0</expression>
+                            <uuid>1491aa93fe5443c69249edc4dc2b57e7</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/actions_stats.skipped)&gt;0</expression>
                             <name>At least one action has been skipped</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -71,12 +66,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>86798a7581e94a3da5de969dfe714c91</uuid>
+                    <uuid>5044b2b7774a4b6bb277e86098592e86</uuid>
                     <name>System configuration changes</name>
                     <type>DEPENDENT</type>
                     <key>cfg_changed_cnt</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -96,8 +91,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>1dea1922d7f34cc891bac891702500ab</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/cfg_changed_cnt)&gt;0</expression>
+                            <uuid>2b5988ababab4fe0a435d8ebfd31387e</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/cfg_changed_cnt)&gt;0</expression>
                             <name>System configuration has been changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -110,11 +105,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>d7d700f5cc23428aa78cba0fb4d5de63</uuid>
+                    <uuid>2cd32647c9594da5b02da1a65b8ede2d</uuid>
                     <name>Cloud connected</name>
                     <type>DEPENDENT</type>
                     <key>cloud.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -140,8 +136,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>08df627ef0e14dc281a06099f561f9b8</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/cloud.connected)&lt;&gt;0</expression>
+                            <uuid>cced6d7775bf4ca48cc2b83587c592e2</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/cloud.connected)&lt;&gt;0</expression>
                             <name>Cloud connection state has changed</name>
                             <priority>AVERAGE</priority>
                             <tags>
@@ -158,11 +154,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>85163193a7484dfb90b6ff8b1cc0a038</uuid>
+                    <uuid>7e78233c83c2438d9add4c5de8d45032</uuid>
                     <name>Cloud enabled</name>
                     <type>DEPENDENT</type>
                     <key>cloud.enabled</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -188,8 +185,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>91ae9e1dceeb432e825d458b1ff23625</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/cloud.enabled)&lt;&gt;0</expression>
+                            <uuid>aab2c35fb6a0492b81e8c3962cfddd99</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/cloud.enabled)&lt;&gt;0</expression>
                             <name>Cloud configuration has changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -206,12 +203,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>70255db192b7468784ef943006118bca</uuid>
+                    <uuid>85f9ead1b0014840b97f477e9e537ba3</uuid>
                     <name>File system free size</name>
                     <type>DEPENDENT</type>
                     <key>fs_free</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -232,12 +229,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>70b2b8f077ba4d22884f12f6a481ab59</uuid>
+                    <uuid>a82f48c4e0b14cc18bf29c32d1798bbd</uuid>
                     <name>File system total size</name>
                     <type>DEPENDENT</type>
                     <key>fs_size</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -258,11 +255,565 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>5b8afd21a3684254a62a9b12bf412986</uuid>
+                    <uuid>0c25f1d9a33242d2a409cee2a2af2857</uuid>
+                    <name>Data collector - HTTP</name>
+                    <type>HTTP_AGENT</type>
+                    <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    <delay>30</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$SHELLY_USER}</username>
+                    <password>{$SHELLY_PASS}</password>
+                    <description>Collect data from Shelly device status API.</description>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.body</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>25s</timeout>
+                    <url>http://{$SHELLY_HOST}/status</url>
+                    <follow_redirects>NO</follow_redirects>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Data collection</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>c916dfad59784ba4bf0a5bd4816bec42</uuid>
+                    <name>ICMP loss</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingloss[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>b13469d7bace4e679d61b1e4e9545bea</uuid>
+                            <expression>min(/Template Shelly Bulb RGBW/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly Bulb RGBW/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                            <name>High ICMP ping loss</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly Bulb RGBW/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>6ac81482c9974bbb9e71fd55c889b6dc</uuid>
+                    <name>ICMP response time</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingsec[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>a2709203d6484818a55bfcf8449ef242</uuid>
+                            <expression>avg(/Template Shelly Bulb RGBW/icmppingsec[{$SHELLY_HOST}],5m)&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
+                            <name>High ICMP ping response time</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>High ICMP ping loss</name>
+                                    <expression>min(/Template Shelly Bulb RGBW/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly Bulb RGBW/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly Bulb RGBW/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>cc296052771b441f82426a8952e34570</uuid>
+                    <name>ICMP ping</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>ee88e27374dc451497f88b193c88b75b</uuid>
+                            <expression>max(/Template Shelly Bulb RGBW/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                            <name>Unavailable by ICMP ping</name>
+                            <priority>HIGH</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.
+Last three attempts returned timeout.  Please check device connectivity.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>e839ce9f08b14df98cfeba29c695d884</uuid>
+                    <name>Light color channel blue</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.blue</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].blue</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>663ad00ededa4f3897207ba911163e42</uuid>
+                    <name>Light white brightness</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.brightness</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].brightness</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>e283bcc78f0e492984c8514425690645</uuid>
+                    <name>Light color</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.color</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>var json_data = JSON.parse(value);
+
+var color = 'Unknown';
+
+var mode = '?';
+var red = '?';
+var green = '?';
+var blue = '?';
+var gain = '?';
+var temp = '?';
+var brightness = '?';
+
+if (json_data.lights[0].mode !== undefined) {
+  mode = json_data.lights[0].mode;
+}
+if (json_data.lights[0].red !== undefined) {
+  red = json_data.lights[0].red;
+}
+if (json_data.lights[0].green !== undefined) {
+  green = json_data.lights[0].green;
+}
+if (json_data.lights[0].blue !== undefined) {
+  blue = json_data.lights[0].blue;
+}
+if (json_data.lights[0].gain !== undefined) {
+  gain = json_data.lights[0].gain;
+}
+if (json_data.lights[0].temp !== undefined) {
+  temp = json_data.lights[0].temp;
+}
+if (json_data.lights[0].brightness !== undefined) {
+  brightness = json_data.lights[0].brightness;
+}
+
+if (mode == 'color') {
+  color = mode + ' - R: ' + red + ', G: ' + green + ', B: ' + blue + ', Gain: ' + gain;
+} else if (mode == 'white') {
+  color = mode + ' - Temp: ' + temp + ', Bright: ' + brightness;
+} else {
+  color = 'Unknown (' + mode + ') - R: ' + red + ', G: ' + green + ', B: ' + blue + ', Gain: ' + gain + ', Temp: ' + temp + ', Bright: ' + brightness;
+}
+
+return color ;</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>daa8998a931f414383cc6080d0584735</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/lights-0.color)&lt;&gt;0</expression>
+                            <name>Light color changed</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Light</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>f8bbb822ae2f430483077fc40b478da5</uuid>
+                    <name>Light color effect</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.effect</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <valuemap>
+                        <name>Light effects</name>
+                    </valuemap>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].effect</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>415ce11b71104f1188aee20bc79675ad</uuid>
+                    <name>Light color gain</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.gain</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].gain</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>a224f626002045198b3d65a08dabb977</uuid>
+                    <name>Light color channel green</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.green</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].green</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f96c82230760490f84b56a8c6e1c82b4</uuid>
+                    <name>Light has timer</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.has_timer</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].has_timer</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>e0d94daa32014322aeab76f2dfe8548f</uuid>
+                    <name>Light turned on</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.ison</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].ison</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>1f225eb60819496e9824e7b4da2d88f7</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/lights-0.ison)&lt;&gt;0</expression>
+                            <name>Light state changed</name>
+                            <status>DISABLED</status>
+                            <priority>WARNING</priority>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Light</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>7b52d220f12841658e7f23b4459ad5d7</uuid>
+                    <name>Light mode</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.mode</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].mode</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1b9b36635b2b45e698e202285b5a1756</uuid>
+                    <name>Light color channel red</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.red</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].red</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>531d171b0d034a0cb61ce146140a0b4c</uuid>
+                    <name>Light white temperature</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.temp</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].temp</parameter>
+                            </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0dd3ed591af845b493dc4a5f6e68b2a5</uuid>
+                    <name>Light timer remaining</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.timer_remaining</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].timer_remaining</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f4e5f2b5c8bf49059533677a1ef0cf1b</uuid>
+                    <name>Light transition time</name>
+                    <type>DEPENDENT</type>
+                    <key>lights-0.transition</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <units>ms</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.lights[0].transition</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Light</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>83f1857d1f024d199c29343831adb4c6</uuid>
                     <name>Electrometer self-check</name>
                     <type>DEPENDENT</type>
                     <key>meters-0.is_valid</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <valuemap>
                         <name>Self-check</name>
                     </valuemap>
@@ -295,51 +846,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>48b0d608a6304457900ad74be46115c6</uuid>
-                    <name>Electrometer overpower occurred</name>
-                    <type>DEPENDENT</type>
-                    <key>meters-0.overpower</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.meters[0].overpower</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Electrometer</value>
-                        </tag>
-                    </tags>
-                    <triggers>
-                        <trigger>
-                            <uuid>8bcfea1aa8ee409e992159eb460111bc</uuid>
-                            <expression>last(/Template Shelly Plug and Plug-S/meters-0.overpower)=&quot;true&quot;</expression>
-                            <name>Overpower event has been detected</name>
-                            <priority>DISASTER</priority>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Relay</value>
-                                </tag>
-                            </tags>
-                        </trigger>
-                    </triggers>
-                </item>
-                <item>
-                    <uuid>8a6f5a3389bb4a34a64852dcaea9bc4c</uuid>
+                    <uuid>c037ab119aed44fdbd960ef85cc433a2</uuid>
                     <name>Electrometer power</name>
                     <type>DEPENDENT</type>
                     <key>meters-0.power</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>W</units>
                     <preprocessing>
@@ -361,11 +873,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>927bd642a38a4aca92f013539befec6d</uuid>
+                    <uuid>213db724f1f148ac9a9458a94d20c700</uuid>
                     <name>Electrometer total consumed</name>
                     <type>DEPENDENT</type>
                     <key>meters-0.total</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>Wh</units>
                     <preprocessing>
@@ -387,11 +900,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>1fd6f125271642acb5dd4aa4cc938f47</uuid>
+                    <uuid>56bec3f8889147338bb994f5ea79c4c7</uuid>
                     <name>MQTT connected</name>
                     <type>DEPENDENT</type>
                     <key>mqtt.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -413,8 +927,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>bde85e437d734a91ad6066451590d451</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/mqtt.connected)&lt;&gt;0</expression>
+                            <uuid>f7345aedab2b4617b591435b56e74024</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/mqtt.connected)&lt;&gt;0</expression>
                             <name>MQTT connection state has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -427,52 +941,29 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>cd8d3212af3840c7913fa1a3b6ce1d0d</uuid>
-                    <name>Device overtemperature occurred</name>
-                    <type>DEPENDENT</type>
-                    <key>overtemperature</key>
+                    <uuid>e35691efa2a44b40ae9f4c67d030ea1f</uuid>
+                    <name>Data collector - MQTT</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
                     <delay>0</delay>
+                    <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.overtemperature</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
+                    <description>Collect data from Shelly device status topic.</description>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Temperature</value>
+                            <value>Data collection</value>
                         </tag>
                     </tags>
-                    <triggers>
-                        <trigger>
-                            <uuid>5fbc7758a5244056af7c583eb646f4e4</uuid>
-                            <expression>last(/Template Shelly Plug and Plug-S/overtemperature)=&quot;true&quot;</expression>
-                            <name>Overtemperature event has been detected</name>
-                            <priority>DISASTER</priority>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Temperature</value>
-                                </tag>
-                            </tags>
-                        </trigger>
-                    </triggers>
                 </item>
                 <item>
-                    <uuid>c9e1f361ece24579b7104d8279813bdc</uuid>
+                    <uuid>e50bb554f4ac4c66be44b0e81c75eb9a</uuid>
                     <name>RAM free</name>
                     <type>DEPENDENT</type>
                     <key>ram_free</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -493,12 +984,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>fe87dfe1292749278da40e85afe49354</uuid>
+                    <uuid>68d7380e957e407f90834af68d306157</uuid>
                     <name>RAM total</name>
                     <type>DEPENDENT</type>
                     <key>ram_total</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -519,236 +1010,18 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>648a71b874f948c28391fad1b9b64416</uuid>
-                    <name>Relay has timer</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.has_timer</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].has_timer</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>786f236af2b84d0f943121b407586854</uuid>
-                    <name>Relay turned on</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.ison</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].ison</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                    <triggers>
-                        <trigger>
-                            <uuid>346502b7bec243288ed9c88c04879cbc</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/relays-0.ison)&lt;&gt;0</expression>
-                            <name>Relay state has changed</name>
-                            <priority>WARNING</priority>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Relay</value>
-                                </tag>
-                            </tags>
-                        </trigger>
-                    </triggers>
-                </item>
-                <item>
-                    <uuid>ee5a0c03b9aa4679befaa0540d9b9bc9</uuid>
-                    <name>Relay overpower occurred</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.overpower</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].overpower</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                    <triggers>
-                        <trigger>
-                            <uuid>d35da485f66644a3bf8edfacaa45c76b</uuid>
-                            <expression>last(/Template Shelly Plug and Plug-S/relays-0.overpower)=&quot;true&quot;</expression>
-                            <name>Overpower event has been detected</name>
-                            <priority>DISASTER</priority>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Relay</value>
-                                </tag>
-                            </tags>
-                        </trigger>
-                    </triggers>
-                </item>
-                <item>
-                    <uuid>76c73cc4c4db43dd902804bdb4ca1a8e</uuid>
-                    <name>Relays last command source</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.source</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].source</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>b2d9605591e545fdb129785e2514a381</uuid>
-                    <name>Relay timer duration</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.timer_duration</key>
-                    <delay>0</delay>
-                    <units>s</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].timer_duration</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>11363348cce14f26b3df57f983f89fa3</uuid>
-                    <name>Relay timer remaining</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.timer_remaining</key>
-                    <delay>0</delay>
-                    <units>s</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].timer_remaining</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>988dc400cb2b449cbff9b5df6c29f80d</uuid>
-                    <name>Relay timer started</name>
-                    <type>DEPENDENT</type>
-                    <key>relays-0.timer_started</key>
-                    <delay>0</delay>
-                    <units>unixtime</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.relays[0].timer_started</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Relay</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>bee23426b54245b1a19ad658b67d8b6c</uuid>
+                    <uuid>83c2f76a70c64a06ade7c94c2e4b810b</uuid>
                     <name>Status data</name>
-                    <type>HTTP_AGENT</type>
+                    <type>DEPENDENT</type>
                     <key>status</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <authtype>BASIC</authtype>
-                    <username>{$SHELLY_USER}</username>
-                    <password>{$SHELLY_PASS}</password>
-                    <description>Collect data from Shelly device status API.</description>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.body</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <url>http://{HOST.IP}/status</url>
-                    <follow_redirects>NO</follow_redirects>
-                    <output_format>JSON</output_format>
+                    <description>Collect data from HTTP or MQTT data collector items.</description>
+                    <master_item>
+                        <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
@@ -757,8 +1030,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>0f12dac3e7ab450d93a2162a3d4dcbad</uuid>
-                            <expression>nodata(/Template Shelly Plug and Plug-S/status,120s)=1</expression>
+                            <uuid>bdd64b4c8d124c50b49823c501c43262</uuid>
+                            <expression>nodata(/Template Shelly Bulb RGBW/status,120s)=1</expression>
                             <name>No data received</name>
                             <priority>HIGH</priority>
                             <tags>
@@ -771,100 +1044,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>6e62338a33f44024a19caaf980332d06</uuid>
-                    <name>Temperature self-check</name>
-                    <type>DEPENDENT</type>
-                    <key>tmp.is_valid</key>
-                    <delay>0</delay>
-                    <valuemap>
-                        <name>Self-check</name>
-                    </valuemap>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.tmp.is_valid</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Self-check</value>
-                        </tag>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Temperature</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>51bf83593a26418d95ae113d80b6352d</uuid>
-                    <name>Temperature in Celsius</name>
-                    <type>DEPENDENT</type>
-                    <key>tmp.tC</key>
-                    <delay>0</delay>
-                    <value_type>FLOAT</value_type>
-                    <units>°C</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.tmp.tC</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Temperature</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>f5c54d9efa124b90b8a669d7f4e74cd9</uuid>
-                    <name>Temperature in Fahrenheit</name>
-                    <type>DEPENDENT</type>
-                    <key>tmp.tF</key>
-                    <delay>0</delay>
-                    <value_type>FLOAT</value_type>
-                    <units>°F</units>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.tmp.tF</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Temperature</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>f384c05104a04255b1c45eae4d4ccefd</uuid>
+                    <uuid>e212dea903bc4c7dbccf9c5b341b0e02</uuid>
                     <name>Device time</name>
                     <type>DEPENDENT</type>
                     <key>unixtime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>unixtime</units>
                     <preprocessing>
                         <step>
@@ -885,8 +1070,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>3d82b0ea7ca94ab9bc315499b6664cae</uuid>
-                            <expression>fuzzytime(/Template Shelly Plug and Plug-S/unixtime,60s)=0</expression>
+                            <uuid>34ae51bb773f46fe9e7e2fee611c831f</uuid>
+                            <expression>fuzzytime(/Template Shelly Bulb RGBW/unixtime,60s)=0</expression>
                             <name>Time is out of sync</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -899,12 +1084,40 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>49596ea9fdf14dd0995948b53cf22066</uuid>
+                    <uuid>9bdeb607f22d4328a0fe442d798845e1</uuid>
+                    <name>Firmware beta version</name>
+                    <type>DEPENDENT</type>
+                    <key>update.beta_version</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.beta_version</parameter>
+                            </parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>46eb8615485348ca99e39bc0a46f9a63</uuid>
                     <name>Update available</name>
                     <type>DEPENDENT</type>
                     <key>update.has_update</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -926,8 +1139,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>d538eeb87492428cb6347c4d5fa3482f</uuid>
-                            <expression>last(/Template Shelly Plug and Plug-S/update.has_update)=&quot;true&quot;</expression>
+                            <uuid>dfc0b4e32fe44d00ade256bd533f6e11</uuid>
+                            <expression>last(/Template Shelly Bulb RGBW/update.has_update)=&quot;true&quot;</expression>
                             <name>Update available</name>
                             <priority>INFO</priority>
                             <tags>
@@ -940,12 +1153,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>5e8b1885642c45ba9a03d1f8a23efb32</uuid>
+                    <uuid>c76a5e4c8581459c8dc2bc01c09105b2</uuid>
                     <name>Firmware new version</name>
                     <type>DEPENDENT</type>
                     <key>update.new_version</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -967,12 +1180,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9764737b1140495c96042c8d4b5a5a7f</uuid>
+                    <uuid>e56ea45d5c534c02b9ee8698da29509b</uuid>
                     <name>Firmware old version</name>
                     <type>DEPENDENT</type>
                     <key>update.old_version</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -994,8 +1207,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>7ddaa3818c234968a25381497fc8e71c</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/update.old_version)&lt;&gt;0</expression>
+                            <uuid>c935efda6b6c4667b89942242cc5e473</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/update.old_version)&lt;&gt;0</expression>
                             <name>Version has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -1008,12 +1221,39 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>22423744cd0d40f694acfde3fe9c98c2</uuid>
+                    <uuid>8e71c700a3ce48ffba32e8a674b3c109</uuid>
+                    <name>Update status</name>
+                    <type>DEPENDENT</type>
+                    <key>update.status</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.status</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0948db270a8646cbae47a4508ef41420</uuid>
                     <name>Uptime</name>
                     <type>DEPENDENT</type>
                     <key>uptime</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>uptime</units>
                     <preprocessing>
                         <step>
@@ -1034,9 +1274,10 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>38438df02abe47ca8ca10675624b615a</uuid>
-                            <expression>change(/Template Shelly Plug and Plug-S/uptime)&lt;0</expression>
+                            <uuid>76b64ca0bdfc4df5ac779222129dd70f</uuid>
+                            <expression>change(/Template Shelly Bulb RGBW/uptime)&lt;0</expression>
                             <name>Device has been restarted</name>
+                            <status>DISABLED</status>
                             <priority>WARNING</priority>
                             <tags>
                                 <tag>
@@ -1048,12 +1289,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>7fec7a57b4a54af3a4f87c53fe5bee06</uuid>
+                    <uuid>70391e27ddba4993940a69eac68dc6fb</uuid>
                     <name>WiFi connected</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.connected</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1079,12 +1320,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>06850685459e43a899c163c7b6dcb553</uuid>
+                    <uuid>e1866c5349b84ec28905b46683cc01af</uuid>
                     <name>WiFi IP</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ip</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1110,12 +1351,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>8ae762bd211a444fb8c12ed786bf6ae6</uuid>
+                    <uuid>7f89d382a0a1460faeadd8634602a592</uuid>
                     <name>WiFi RSSI</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.rssi</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <value_type>FLOAT</value_type>
                     <units>dBm</units>
                     <valuemap>
@@ -1144,12 +1385,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>8103f845df5d40479c0dd3f933fa61cf</uuid>
+                    <uuid>49dbe3c784404b368782dff4eb060aa6</uuid>
                     <name>WiFi SSID</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ssid</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1177,6 +1418,36 @@
             </items>
             <macros>
                 <macro>
+                    <macro>{$ICMP_LOSS_WARN}</macro>
+                    <value>20</value>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
+                    <value>0.15</value>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_HOST}</macro>
+                    <value>tcp://localhost:1883</value>
+                    <description>MQTT broker host</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_PASS}</macro>
+                    <type>SECRET_TEXT</type>
+                    <description>MQTT broker password, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_USER}</macro>
+                    <description>MQTT broker user, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_DEVICE_ID}</macro>
+                    <description>Shelly device MQTT ID</description>
+                </macro>
+                <macro>
+                    <macro>{$SHELLY_HOST}</macro>
+                    <description>Device host</description>
+                </macro>
+                <macro>
                     <macro>{$SHELLY_PASS}</macro>
                     <type>SECRET_TEXT</type>
                     <description>Device password, if configured</description>
@@ -1189,7 +1460,29 @@
             </macros>
             <valuemaps>
                 <valuemap>
-                    <uuid>89a0bf3bd4ad4ff097c9ccd100e361d2</uuid>
+                    <uuid>3979e3dbc225402299b01107ba69181c</uuid>
+                    <name>Light effects</name>
+                    <mappings>
+                        <mapping>
+                            <value>0</value>
+                            <newvalue>Off</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>Meteor Shower</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2</value>
+                            <newvalue>Gradual Change</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>3</value>
+                            <newvalue>Flash</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+                <valuemap>
+                    <uuid>27b7715f12794ed1a0ea90ebf249d204</uuid>
                     <name>Received Signal Strength Indicator</name>
                     <mappings>
                         <mapping>
@@ -1220,7 +1513,7 @@
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>c5c4dc08a6114690af2e1f7e30a2114a</uuid>
+                    <uuid>e10d286089ce48f5b8c179e39d8d4827</uuid>
                     <name>Self-check</name>
                     <mappings>
                         <mapping>
@@ -1236,58 +1529,4 @@
             </valuemaps>
         </template>
     </templates>
-    <triggers>
-        <trigger>
-            <uuid>05bbe39f9fba4ea48985f2d8940d6353</uuid>
-            <expression>last(/Template Shelly Plug and Plug-S/fs_free)&gt;=last(/Template Shelly Plug and Plug-S/fs_size)*0.8 and last(/Template Shelly Plug and Plug-S/fs_free)&lt;last(/Template Shelly Plug and Plug-S/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>a8f26ba02be4485aaadbd07ab0a8da73</uuid>
-            <expression>last(/Template Shelly Plug and Plug-S/fs_free)&gt;=last(/Template Shelly Plug and Plug-S/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>6eb55f0c6f6743b48c5525335da16a57</uuid>
-            <expression>last(/Template Shelly Plug and Plug-S/ram_free)&gt;=last(/Template Shelly Plug and Plug-S/ram_total)*0.8 and last(/Template Shelly Plug and Plug-S/ram_free)&lt;last(/Template Shelly Plug and Plug-S/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>6ae12da8db5e475db8e8e4b6d6220420</uuid>
-            <expression>last(/Template Shelly Plug and Plug-S/ram_free)&gt;=last(/Template Shelly Plug and Plug-S/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-    </triggers>
 </zabbix_export>

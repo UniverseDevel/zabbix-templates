@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-08-02T18:59:02Z</date>
+    <date>2021-10-06T11:10:23Z</date>
     <groups>
         <group>
             <uuid>f609ef9a7ec748ae8ceb88ad929b7613</uuid>
@@ -14,14 +14,9 @@
     </groups>
     <templates>
         <template>
-            <uuid>e5e4158ec3584ce6ade9e13c6b09bc56</uuid>
-            <template>Template Shelly Motion</template>
-            <name>Template Shelly Motion</name>
-            <templates>
-                <template>
-                    <name>Template Module ICMP Ping</name>
-                </template>
-            </templates>
+            <uuid>c48d95cf612f481ca974a80b5a2e8185</uuid>
+            <template>Template Shelly Flood</template>
+            <name>Template Shelly Flood</name>
             <groups>
                 <group>
                     <name>Shelly</name>
@@ -32,11 +27,12 @@
             </groups>
             <items>
                 <item>
-                    <uuid>b182a3f49dfa4a868d2aa11f2cbab8ee</uuid>
+                    <uuid>9131d65406da4c44a51a091efb51bef7</uuid>
                     <name>Skipped actions</name>
                     <type>DEPENDENT</type>
                     <key>actions_stats.skipped</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -56,8 +52,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>8787a6f12e494a369b126d06fa4b6a9e</uuid>
-                            <expression>change(/Template Shelly Motion/actions_stats.skipped)&gt;0</expression>
+                            <uuid>db76e776a3be4c549d7eabf7ca848f3b</uuid>
+                            <expression>change(/Template Shelly Flood/actions_stats.skipped)&gt;0</expression>
                             <name>At least one action has been skipped</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -70,12 +66,17 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>6371b845439a4c66a6a6a6f3627b252c</uuid>
+                    <uuid>48d3c3a76c1b4ad3b8d0ce4ae2000c6a</uuid>
                     <name>Battery percentage</name>
                     <type>DEPENDENT</type>
                     <key>bat.value</key>
                     <delay>0</delay>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
                     <units>%</units>
+                    <valuemap>
+                        <name>Battery</name>
+                    </valuemap>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -95,9 +96,9 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>c6fdad66212e4e2d82c6574b8c0617fd</uuid>
-                            <expression>last(/Template Shelly Motion/bat.value)&lt;=10</expression>
-                            <name>Sensor battery is low</name>
+                            <uuid>7efa98f2b1de450e9d7133baf25a4f18</uuid>
+                            <expression>last(/Template Shelly Flood/bat.value)&lt;=10 and last(/Template Shelly Flood/bat.value)&lt;&gt;-1</expression>
+                            <name>Device battery is low</name>
                             <priority>HIGH</priority>
                             <tags>
                                 <tag>
@@ -107,9 +108,9 @@
                             </tags>
                         </trigger>
                         <trigger>
-                            <uuid>876689f576c34b2499754656e4e5b6ad</uuid>
-                            <expression>last(/Template Shelly Motion/bat.value)&gt;10 and last(/Template Shelly Motion/bat.value)&lt;=20</expression>
-                            <name>Sensor battery is low</name>
+                            <uuid>a9ac229d98a84d62b3de8112483b069f</uuid>
+                            <expression>last(/Template Shelly Flood/bat.value)&gt;10 and last(/Template Shelly Flood/bat.value)&lt;=20</expression>
+                            <name>Device battery is low</name>
                             <priority>AVERAGE</priority>
                             <tags>
                                 <tag>
@@ -121,11 +122,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>87918a13ce8f4e43b9f09b58905a16a1</uuid>
+                    <uuid>6ddc8fe2b82e49ec9824c72b30d94dff</uuid>
                     <name>Battery voltage</name>
                     <type>DEPENDENT</type>
                     <key>bat.voltage</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <value_type>FLOAT</value_type>
                     <units>V</units>
                     <preprocessing>
@@ -147,11 +149,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>16e24d3bea4643909289f2729dbbd078</uuid>
+                    <uuid>e4df4a9d64074fd19f80054770d1964e</uuid>
                     <name>System configuration changes</name>
                     <type>DEPENDENT</type>
                     <key>cfg_changed_cnt</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -171,8 +174,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>4060facac10547d59fd25f57a1ac0761</uuid>
-                            <expression>change(/Template Shelly Motion/cfg_changed_cnt)&gt;0</expression>
+                            <uuid>11ca1feee6d34198bee9479d131e41fe</uuid>
+                            <expression>change(/Template Shelly Flood/cfg_changed_cnt)&gt;0</expression>
                             <name>System configuration has been changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -185,37 +188,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>1796b216f22540a498bbcdd2f289b3b5</uuid>
-                    <name>Charger connected</name>
-                    <type>DEPENDENT</type>
-                    <key>charger</key>
-                    <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.charger</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>System</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>c14500236c4848f3ae829ccdbd93483c</uuid>
+                    <uuid>cc213df9b4f14079910656b71492f3e9</uuid>
                     <name>Cloud connected</name>
                     <type>DEPENDENT</type>
                     <key>cloud.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -241,8 +219,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>da45482d40b44e5b8e761053bce07c48</uuid>
-                            <expression>change(/Template Shelly Motion/cloud.connected)&lt;&gt;0</expression>
+                            <uuid>b6668773e84e4e5581150b70c39602c7</uuid>
+                            <expression>change(/Template Shelly Flood/cloud.connected)&lt;&gt;0</expression>
                             <name>Cloud connection state has changed</name>
                             <priority>AVERAGE</priority>
                             <tags>
@@ -259,11 +237,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>b2b35071152b48d5b1ea2e41fc26ab6d</uuid>
+                    <uuid>4c9939ef4cd14c1cbffe368885e3b659</uuid>
                     <name>Cloud enabled</name>
                     <type>DEPENDENT</type>
                     <key>cloud.enabled</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -289,8 +268,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>9dfb447d1211449c939be9258d8e8e0c</uuid>
-                            <expression>change(/Template Shelly Motion/cloud.enabled)&lt;&gt;0</expression>
+                            <uuid>7adbf2ef0a17484a863033e5cc5abb2b</uuid>
+                            <expression>change(/Template Shelly Flood/cloud.enabled)&lt;&gt;0</expression>
                             <name>Cloud configuration has changed</name>
                             <priority>INFO</priority>
                             <tags>
@@ -307,11 +286,55 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>33d5ca368f844f23a0f6c1c3b6357cb9</uuid>
+                    <uuid>8d18711c8c084f708c8aea7bfaf08da6</uuid>
+                    <name>Flood sensor</name>
+                    <type>DEPENDENT</type>
+                    <key>flood</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.flood</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Flood</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>30e03190cb344156845f3f67410bfdaf</uuid>
+                            <expression>last(/Template Shelly Flood/flood)=&quot;true&quot;</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Template Shelly Flood/flood)=&quot;false&quot;</recovery_expression>
+                            <name>Flood detected</name>
+                            <priority>HIGH</priority>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Flood</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>a61696f605494069a434beaee86a57de</uuid>
                     <name>File system free size</name>
                     <type>DEPENDENT</type>
                     <key>fs_free</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -332,11 +355,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>abce78709c4e4287adef784f8ce6bc28</uuid>
+                    <uuid>4c8c92d2d5d34a0ab82170b806daf5ff</uuid>
                     <name>File system total size</name>
                     <type>DEPENDENT</type>
                     <key>fs_size</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -357,37 +381,151 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>bf34b11182194363b1eb807f82db2dd6</uuid>
-                    <name>Lux illumination</name>
-                    <type>DEPENDENT</type>
-                    <key>lux.illumination</key>
-                    <delay>0</delay>
+                    <uuid>9dce610f668c4f7586a9716bcb655e60</uuid>
+                    <name>Data collector - HTTP</name>
+                    <type>HTTP_AGENT</type>
+                    <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    <delay>30</delay>
+                    <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$SHELLY_USER}</username>
+                    <password>{$SHELLY_PASS}</password>
+                    <description>Collect data from Shelly device status API.</description>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.lux.illumination</parameter>
+                                <parameter>$.body</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
+                    <url>http://{$SHELLY_HOST}/status</url>
+                    <follow_redirects>NO</follow_redirects>
+                    <output_format>JSON</output_format>
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Lux sensor</value>
+                            <value>Data collection</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>17e40ac5118a4077b0fcf833809d8ede</uuid>
-                    <name>Lux sensor self-check</name>
+                    <uuid>ebee2dba87a642fbb4a83cff70136c72</uuid>
+                    <name>ICMP loss</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingloss[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>aa73f48c7505450e8638420c91d68d18</uuid>
+                            <expression>min(/Template Shelly Flood/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly Flood/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                            <name>High ICMP ping loss</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly Flood/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>301b6efa313443b291e6ac96c8e9ddfe</uuid>
+                    <name>ICMP response time</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingsec[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <status>DISABLED</status>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>3799544d2dd443eaa58326ab4af30dee</uuid>
+                            <expression>avg(/Template Shelly Flood/icmppingsec[{$SHELLY_HOST}],5m)&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
+                            <name>High ICMP ping response time</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>High ICMP ping loss</name>
+                                    <expression>min(/Template Shelly Flood/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly Flood/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly Flood/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>7d837a8a223e49b49281713090988454</uuid>
+                    <name>ICMP ping</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <status>DISABLED</status>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>46301879ba0b4ee6b8fb4f8ef82dc495</uuid>
+                            <expression>max(/Template Shelly Flood/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                            <name>Unavailable by ICMP ping</name>
+                            <priority>HIGH</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.
+Last three attempts returned timeout.  Please check device connectivity.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>37514c00cf5d4a838a5311be19b8357c</uuid>
+                    <name>Device self-check</name>
                     <type>DEPENDENT</type>
-                    <key>lux.is_valid</key>
+                    <key>is_valid</key>
                     <delay>0</delay>
+                    <history>365d</history>
                     <valuemap>
                         <name>Self-check</name>
                     </valuemap>
@@ -395,7 +533,7 @@
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.lux.is_valid</parameter>
+                                <parameter>$.is_valid</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -411,44 +549,21 @@
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Lux sensor</value>
+                            <value>Self-check</value>
                         </tag>
                         <tag>
                             <tag>Application</tag>
-                            <value>Sefl-check</value>
+                            <value>System</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
-                    <uuid>315b506e11dc43f683c9ed9892d68b79</uuid>
-                    <name>Lux value</name>
-                    <type>DEPENDENT</type>
-                    <key>lux.value</key>
-                    <delay>0</delay>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.lux.value</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Lux sensor</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>fcc21fff6f7048f89d364c671e3b115a</uuid>
+                    <uuid>1669ac59f19d467d9c791e671c660277</uuid>
                     <name>MQTT connected</name>
                     <type>DEPENDENT</type>
                     <key>mqtt.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -470,8 +585,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>3fbd3df9794a4a69a706512332ffd59e</uuid>
-                            <expression>change(/Template Shelly Motion/mqtt.connected)&lt;&gt;0</expression>
+                            <uuid>5c109d05de40482893d4166a213b7e86</uuid>
+                            <expression>change(/Template Shelly Flood/mqtt.connected)&lt;&gt;0</expression>
                             <name>MQTT connection state has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -484,11 +599,72 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>b673f5d7502240248b7b6bd3b3a68aa7</uuid>
+                    <uuid>847009984adb438f8e7119c32301f753</uuid>
+                    <name>Data collector - MQTT</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                    <delay>0</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Collect data from Shelly device status topic.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Data collection</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1c705a74b90847a8a2ec5ec551870ba4</uuid>
+                    <name>Rain sensor</name>
+                    <type>DEPENDENT</type>
+                    <key>rain_sensor</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.rain_sensor</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Rain</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>27285d7298be4ab295722b60727f1ab2</uuid>
+                            <expression>last(/Template Shelly Flood/rain_sensor)=&quot;true&quot;</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Template Shelly Flood/rain_sensor)=&quot;false&quot;</recovery_expression>
+                            <name>Rain detected</name>
+                            <priority>HIGH</priority>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Rain</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>c5e24ca4289e4fbf82c6a5b4891da834</uuid>
                     <name>RAM free</name>
                     <type>DEPENDENT</type>
                     <key>ram_free</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -509,11 +685,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>eb3a1f3530274fe98d9ffab706586030</uuid>
+                    <uuid>2df6dca3f9a747bdbe4191fc341d1d8d</uuid>
                     <name>RAM total</name>
                     <type>DEPENDENT</type>
                     <key>ram_total</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -534,19 +711,22 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>25974414e1cc4701b7f7eaa871dfee63</uuid>
-                    <name>Motion sensor active</name>
+                    <uuid>9f1abad8f429457b9f3eb6ad356cd61b</uuid>
+                    <name>Sensor error</name>
                     <type>DEPENDENT</type>
-                    <key>sensor.active</key>
+                    <key>sensor_error</key>
                     <delay>0</delay>
-                    <trends>0</trends>
-                    <value_type>TEXT</value_type>
+                    <history>1w</history>
+                    <valuemap>
+                        <name>Sensor error</name>
+                    </valuemap>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
                             <parameters>
-                                <parameter>$.sensor.active</parameter>
+                                <parameter>$.sensor_error</parameter>
                             </parameters>
+                            <error_handler>DISCARD_VALUE</error_handler>
                         </step>
                     </preprocessing>
                     <master_item>
@@ -555,154 +735,39 @@
                     <tags>
                         <tag>
                             <tag>Application</tag>
-                            <value>Motion sensor</value>
+                            <value>System</value>
                         </tag>
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>46e649c53c6c437cac6948f1bd4c2cc3</uuid>
-                            <expression>last(/Template Shelly Motion/sensor.active)=&quot;true&quot;</expression>
+                            <uuid>e2a581dc4ba44f41b3de83ab7a8fd119</uuid>
+                            <expression>last(/Template Shelly Flood/sensor_error)&lt;&gt;-1</expression>
                             <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                            <recovery_expression>last(/Template Shelly Motion/sensor.active)=&quot;false&quot;</recovery_expression>
-                            <name>Motion sensor active</name>
-                            <priority>INFO</priority>
+                            <recovery_expression>last(/Template Shelly Flood/sensor_error)=-1</recovery_expression>
+                            <name>Device has errors</name>
+                            <priority>HIGH</priority>
                             <tags>
                                 <tag>
                                     <tag>Application</tag>
-                                    <value>Motion sensor</value>
+                                    <value>System</value>
                                 </tag>
                             </tags>
                         </trigger>
                     </triggers>
                 </item>
                 <item>
-                    <uuid>1467e5abcc38479fa71bbba68f1e6ab5</uuid>
-                    <name>Motion sensor self-check</name>
-                    <type>DEPENDENT</type>
-                    <key>sensor.is_valid</key>
-                    <delay>0</delay>
-                    <valuemap>
-                        <name>Self-check</name>
-                    </valuemap>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.sensor.is_valid</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Motion sensor</value>
-                        </tag>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Sefl-check</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>430cd77e6ea444c28924b3021892febd</uuid>
-                    <name>Motion detection</name>
-                    <type>DEPENDENT</type>
-                    <key>sensor.motion</key>
-                    <delay>0</delay>
-                    <valuemap>
-                        <name>Motion</name>
-                    </valuemap>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.sensor.motion</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Motion sensor</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>60d5d6b7d1db4ba693bbabdbe51e4630</uuid>
-                    <name>Tamper detection</name>
-                    <type>DEPENDENT</type>
-                    <key>sensor.vibration</key>
-                    <delay>0</delay>
-                    <valuemap>
-                        <name>Tampering</name>
-                    </valuemap>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.sensor.vibration</parameter>
-                            </parameters>
-                        </step>
-                        <step>
-                            <type>BOOL_TO_DECIMAL</type>
-                            <parameters>
-                                <parameter/>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <master_item>
-                        <key>status</key>
-                    </master_item>
-                    <tags>
-                        <tag>
-                            <tag>Application</tag>
-                            <value>Motion sensor</value>
-                        </tag>
-                    </tags>
-                </item>
-                <item>
-                    <uuid>629c64f8242c445ab53b002f7e7b3164</uuid>
+                    <uuid>51a5ea2b8e9a48b087a11e2c39e7ee23</uuid>
                     <name>Status data</name>
-                    <type>HTTP_AGENT</type>
+                    <type>DEPENDENT</type>
                     <key>status</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <authtype>BASIC</authtype>
-                    <username>{$SHELLY_USER}</username>
-                    <password>{$SHELLY_PASS}</password>
-                    <description>Collect data from Shelly device status API.</description>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.body</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <timeout>25s</timeout>
-                    <url>http://{HOST.IP}/status</url>
-                    <follow_redirects>NO</follow_redirects>
-                    <output_format>JSON</output_format>
+                    <description>Collect data from HTTP or MQTT data collector items.</description>
+                    <master_item>
+                        <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
@@ -711,8 +776,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>38117ec9b9114443a56f727b60eb3367</uuid>
-                            <expression>nodata(/Template Shelly Motion/status,180s)=1</expression>
+                            <uuid>ab265211fdf84b1dae5978529e94a207</uuid>
+                            <expression>nodata(/Template Shelly Flood/status,120s)=1</expression>
                             <name>No data received</name>
                             <priority>HIGH</priority>
                             <tags>
@@ -725,11 +790,104 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>a2b80942c39a487a8a057cd53f3cd758</uuid>
+                    <uuid>3e45f93977cf48edb7008dc3441f408d</uuid>
+                    <name>Temperature self-check</name>
+                    <type>DEPENDENT</type>
+                    <key>tmp.is_valid</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <valuemap>
+                        <name>Self-check</name>
+                    </valuemap>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.tmp.is_valid</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>BOOL_TO_DECIMAL</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Self-check</value>
+                        </tag>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Temperature</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f14e95cc18594be28c80f4c418071829</uuid>
+                    <name>Temperature in Celsius</name>
+                    <type>DEPENDENT</type>
+                    <key>tmp.tC</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>°C</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.tmp.tC</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Temperature</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>54260a4eb2004ea8ae39446e35f979f5</uuid>
+                    <name>Temperature in Fahrenheit</name>
+                    <type>DEPENDENT</type>
+                    <key>tmp.tF</key>
+                    <delay>0</delay>
+                    <history>365d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>°F</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.tmp.tF</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Temperature</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0afbd51c39f04474abe2dec851715ea0</uuid>
                     <name>Device time</name>
                     <type>DEPENDENT</type>
                     <key>unixtime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>unixtime</units>
                     <preprocessing>
                         <step>
@@ -750,8 +908,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>875e7f149e6347aeb139445aa2489a5f</uuid>
-                            <expression>fuzzytime(/Template Shelly Motion/unixtime,60s)=0</expression>
+                            <uuid>f9ee7bfbb6ca4d9aa3f6126d9330fd8a</uuid>
+                            <expression>fuzzytime(/Template Shelly Flood/unixtime,60s)=0</expression>
                             <name>Time is out of sync</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -764,11 +922,40 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>d873de862fce4312ae0d51e3cea6b171</uuid>
+                    <uuid>507bf7298b4f4a669a6aeefebfee9420</uuid>
+                    <name>Firmware beta version</name>
+                    <type>DEPENDENT</type>
+                    <key>update.beta_version</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.beta_version</parameter>
+                            </parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>efb1799826e644aa8f3762a3af77c25b</uuid>
                     <name>Update available</name>
                     <type>DEPENDENT</type>
                     <key>update.has_update</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -790,8 +977,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>d405b2003e7d4ce78ee4c3cefce81eb9</uuid>
-                            <expression>last(/Template Shelly Motion/update.has_update)=&quot;true&quot;</expression>
+                            <uuid>555e8f4474234582a33537270e27caa6</uuid>
+                            <expression>last(/Template Shelly Flood/update.has_update)=&quot;true&quot;</expression>
                             <name>Update available</name>
                             <priority>INFO</priority>
                             <tags>
@@ -804,11 +991,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>51a1c1999ddc416bae5b16c59c69f114</uuid>
+                    <uuid>cbc8df5efa0a41f39e6ca1022c6e45a9</uuid>
                     <name>Firmware new version</name>
                     <type>DEPENDENT</type>
                     <key>update.new_version</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -830,11 +1018,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>9f2f7fb1bb81424a845229f71e60e1ee</uuid>
+                    <uuid>f55d2a5781914ede8fe7f51a4dc8c26b</uuid>
                     <name>Firmware old version</name>
                     <type>DEPENDENT</type>
                     <key>update.old_version</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -856,8 +1045,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>9050639bec0d442d9a6face8c5f3df67</uuid>
-                            <expression>change(/Template Shelly Motion/update.old_version)&lt;&gt;0</expression>
+                            <uuid>346d535d13c7440abcab7a6d6575714d</uuid>
+                            <expression>change(/Template Shelly Flood/update.old_version)&lt;&gt;0</expression>
                             <name>Version has changed</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -870,11 +1059,39 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>142a08d145df4da4a30af028f381bb32</uuid>
+                    <uuid>2767f1e0cec748d69e7fc60abc181fae</uuid>
+                    <name>Update status</name>
+                    <type>DEPENDENT</type>
+                    <key>update.status</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.status</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>dfe0c19e86164b89b782f7a36c2d0915</uuid>
                     <name>Uptime</name>
                     <type>DEPENDENT</type>
                     <key>uptime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>uptime</units>
                     <preprocessing>
                         <step>
@@ -895,8 +1112,8 @@
                     </tags>
                     <triggers>
                         <trigger>
-                            <uuid>0bd330b80ba14509980f52c531e797b2</uuid>
-                            <expression>change(/Template Shelly Motion/uptime)&lt;0</expression>
+                            <uuid>0d5a2ac742884f69a5bfa362dae8a1d9</uuid>
+                            <expression>change(/Template Shelly Flood/uptime)&lt;0</expression>
                             <name>Device has been restarted</name>
                             <priority>WARNING</priority>
                             <tags>
@@ -909,11 +1126,12 @@
                     </triggers>
                 </item>
                 <item>
-                    <uuid>ad4d358c47874fb5962081a73aac42fd</uuid>
+                    <uuid>4b4fd6b2361f423eba6278ff8ef902ce</uuid>
                     <name>WiFi connected</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.connected</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -939,11 +1157,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>a503e8f140ed4c729c3fe4c8556404fc</uuid>
+                    <uuid>798ef99a7e1d4258b4b578d8eb17f1a3</uuid>
                     <name>WiFi IP</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ip</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -969,11 +1188,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>c53b5e9a29bd448c9848ec96a6a26b32</uuid>
+                    <uuid>e3f7b3debca445af952a571fb3253c68</uuid>
                     <name>WiFi RSSI</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.rssi</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <value_type>FLOAT</value_type>
                     <units>dBm</units>
                     <valuemap>
@@ -1002,11 +1222,12 @@
                     </tags>
                 </item>
                 <item>
-                    <uuid>40ba849a48614489b0778687e5215991</uuid>
+                    <uuid>492fd9dac99a476ab1273f7f7c321434</uuid>
                     <name>WiFi SSID</name>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ssid</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1034,6 +1255,36 @@
             </items>
             <macros>
                 <macro>
+                    <macro>{$ICMP_LOSS_WARN}</macro>
+                    <value>20</value>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
+                    <value>0.15</value>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_HOST}</macro>
+                    <value>tcp://localhost:1883</value>
+                    <description>MQTT broker host</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_PASS}</macro>
+                    <type>SECRET_TEXT</type>
+                    <description>MQTT broker password, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_USER}</macro>
+                    <description>MQTT broker user, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_DEVICE_ID}</macro>
+                    <description>Shelly device MQTT ID</description>
+                </macro>
+                <macro>
+                    <macro>{$SHELLY_HOST}</macro>
+                    <description>Device host</description>
+                </macro>
+                <macro>
                     <macro>{$SHELLY_PASS}</macro>
                     <type>SECRET_TEXT</type>
                     <description>Device password, if configured</description>
@@ -1046,21 +1297,23 @@
             </macros>
             <valuemaps>
                 <valuemap>
-                    <uuid>319fdcbc35404cb9ad5f014459403036</uuid>
-                    <name>Motion</name>
+                    <uuid>f53f8b9b9bae44f8bed42733202ac971</uuid>
+                    <name>Battery</name>
                     <mappings>
                         <mapping>
-                            <value>1</value>
-                            <newvalue>Motion</newvalue>
+                            <type>GREATER_OR_EQUAL</type>
+                            <value>0</value>
+                            <newvalue>Battery</newvalue>
                         </mapping>
                         <mapping>
-                            <value>0</value>
-                            <newvalue>No motion</newvalue>
+                            <type>LESS_OR_EQUAL</type>
+                            <value>-1</value>
+                            <newvalue>Power cable</newvalue>
                         </mapping>
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>b034c6ad33e24658896cf0768693774c</uuid>
+                    <uuid>c586700fc9db4a42ac08af3abfba1001</uuid>
                     <name>Received Signal Strength Indicator</name>
                     <mappings>
                         <mapping>
@@ -1091,7 +1344,7 @@
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>9369a5ce4f394f2f8a2c2a21d030920c</uuid>
+                    <uuid>dc6815fff1c24457ad30965c4ebcd142</uuid>
                     <name>Self-check</name>
                     <mappings>
                         <mapping>
@@ -1105,102 +1358,21 @@
                     </mappings>
                 </valuemap>
                 <valuemap>
-                    <uuid>5f43c56d6fde454dbdaf9f8672d1ded8</uuid>
-                    <name>Tampering</name>
+                    <uuid>0cd3c577375f49d99205c027457c2ff3</uuid>
+                    <name>Sensor error</name>
                     <mappings>
                         <mapping>
-                            <value>1</value>
-                            <newvalue>Tamper</newvalue>
+                            <value>-1</value>
+                            <newvalue>No error</newvalue>
                         </mapping>
                         <mapping>
+                            <type>GREATER_OR_EQUAL</type>
                             <value>0</value>
-                            <newvalue>No tamper</newvalue>
+                            <newvalue>Error</newvalue>
                         </mapping>
                     </mappings>
                 </valuemap>
             </valuemaps>
         </template>
     </templates>
-    <triggers>
-        <trigger>
-            <uuid>71c7888b78754f749eba7cdc6da77e13</uuid>
-            <expression>last(/Template Shelly Motion/sensor.motion)=1</expression>
-            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-            <recovery_expression>sum(/Template Shelly Motion/sensor.motion,10m)=0 or last(/Template Shelly Motion/sensor.active)=&quot;false&quot;</recovery_expression>
-            <name>Motion detected</name>
-            <priority>HIGH</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>Motion sensor</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>d2bfc3c5b2ab4b24b81f40142d9ae9e5</uuid>
-            <expression>last(/Template Shelly Motion/fs_free)&gt;=last(/Template Shelly Motion/fs_size)*0.8 and last(/Template Shelly Motion/fs_free)&lt;last(/Template Shelly Motion/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>19efb44f5a574a268205631f8f15ecd0</uuid>
-            <expression>last(/Template Shelly Motion/fs_free)&gt;=last(/Template Shelly Motion/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>c8f6a50672b84bdc8246adaf6d6b7cae</uuid>
-            <expression>last(/Template Shelly Motion/ram_free)&gt;=last(/Template Shelly Motion/ram_total)*0.8 and last(/Template Shelly Motion/ram_free)&lt;last(/Template Shelly Motion/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>d85269fa1e7840c7adabcf79fef4414f</uuid>
-            <expression>last(/Template Shelly Motion/ram_free)&gt;=last(/Template Shelly Motion/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>c3d1e7a6d70f4a35946c8c734af6a1f6</uuid>
-            <expression>last(/Template Shelly Motion/sensor.vibration)=1 and last(/Template Shelly Motion/sensor.active)=&quot;true&quot;</expression>
-            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-            <recovery_expression>sum(/Template Shelly Motion/sensor.vibration,10m)=0 or last(/Template Shelly Motion/sensor.active)=&quot;false&quot;</recovery_expression>
-            <name>Tampering detected</name>
-            <priority>HIGH</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>Motion sensor</value>
-                </tag>
-            </tags>
-        </trigger>
-    </triggers>
 </zabbix_export>

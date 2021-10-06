@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.4</version>
-    <date>2021-08-04T09:49:10Z</date>
+    <date>2021-10-06T10:59:21Z</date>
     <groups>
         <group>
             <uuid>f609ef9a7ec748ae8ceb88ad929b7613</uuid>
@@ -17,11 +17,6 @@
             <uuid>d51f33db1b344222937b67babcb6e413</uuid>
             <template>Template Shelly 3EM</template>
             <name>Template Shelly 3EM</name>
-            <templates>
-                <template>
-                    <name>Template Module ICMP Ping</name>
-                </template>
-            </templates>
             <groups>
                 <group>
                     <name>Shelly</name>
@@ -37,7 +32,7 @@
                     <type>DEPENDENT</type>
                     <key>actions_stats.skipped</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -76,7 +71,7 @@
                     <type>DEPENDENT</type>
                     <key>cfg_changed_cnt</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <preprocessing>
                         <step>
                             <type>JSONPATH</type>
@@ -115,7 +110,7 @@
                     <type>DEPENDENT</type>
                     <key>cloud.connected</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -164,7 +159,7 @@
                     <type>DEPENDENT</type>
                     <key>cloud.enabled</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1208,7 +1203,7 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     <type>DEPENDENT</type>
                     <key>fs_free</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -1234,7 +1229,7 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     <type>DEPENDENT</type>
                     <key>fs_mounted</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1261,7 +1256,7 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     <type>DEPENDENT</type>
                     <key>fs_size</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -1282,12 +1277,148 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     </tags>
                 </item>
                 <item>
+                    <uuid>8c75d74cad834425a8da022e8d4b3557</uuid>
+                    <name>Data collector - HTTP</name>
+                    <type>HTTP_AGENT</type>
+                    <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    <delay>30</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$SHELLY_USER}</username>
+                    <password>{$SHELLY_PASS}</password>
+                    <description>Collect data from Shelly device status API.</description>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.body</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <url>http://{$SHELLY_HOST}/status</url>
+                    <follow_redirects>NO</follow_redirects>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Data collection</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>c20c645c16444a68a445d563bdd50289</uuid>
+                    <name>ICMP loss</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingloss[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>e4d23db2b1294bd59254f914e4d30d25</uuid>
+                            <expression>min(/Template Shelly 3EM/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly 3EM/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                            <name>High ICMP ping loss</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly 3EM/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>c1ab8da2ccef46a9bb351427bebcad4a</uuid>
+                    <name>ICMP response time</name>
+                    <type>SIMPLE</type>
+                    <key>icmppingsec[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <value_type>FLOAT</value_type>
+                    <units>s</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>8ba3a5bb246a4700b9e09c04379e7c53</uuid>
+                            <expression>avg(/Template Shelly 3EM/icmppingsec[{$SHELLY_HOST}],5m)&gt;{$ICMP_RESPONSE_TIME_WARN}</expression>
+                            <name>High ICMP ping response time</name>
+                            <priority>WARNING</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.</description>
+                            <dependencies>
+                                <dependency>
+                                    <name>High ICMP ping loss</name>
+                                    <expression>min(/Template Shelly 3EM/icmppingloss[{$SHELLY_HOST}],5m)&gt;{$ICMP_LOSS_WARN} and min(/Template Shelly 3EM/icmppingloss[{$SHELLY_HOST}],5m)&lt;100</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>Unavailable by ICMP ping</name>
+                                    <expression>max(/Template Shelly 3EM/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                                </dependency>
+                            </dependencies>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>2a07b863e4dd432488ba2c51b1c004e6</uuid>
+                    <name>ICMP ping</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping[{$SHELLY_HOST}]</key>
+                    <history>1w</history>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>ef9f5c0ec8254e7e800d0afbefdd6c24</uuid>
+                            <expression>max(/Template Shelly 3EM/icmpping[{$SHELLY_HOST}],#3)=0</expression>
+                            <name>Unavailable by ICMP ping</name>
+                            <priority>HIGH</priority>
+                            <description>Last value: {ITEM.LASTVALUE1}.
+Last three attempts returned timeout.  Please check device connectivity.</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>System</value>
+                                </tag>
+                            </tags>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
                     <uuid>d521187129a5411f8e9bc02f13f84c38</uuid>
                     <name>MQTT connected</name>
                     <type>DEPENDENT</type>
                     <key>mqtt.connected</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1323,12 +1454,29 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     </triggers>
                 </item>
                 <item>
+                    <uuid>c0847962493a40c58d4f6f656aa63067</uuid>
+                    <name>Data collector - MQTT</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>mqtt.get[{$MQTT_BROKER_HOST},shellies/{$MQTT_DEVICE_ID}/info,{$MQTT_BROKER_USER},{$MQTT_BROKER_PASS}]</key>
+                    <delay>0</delay>
+                    <history>1h</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Collect data from Shelly device status topic.</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Data collection</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
                     <uuid>30cf2ff764614e4e9601ad71b6253f35</uuid>
                     <name>RAM free</name>
                     <type>DEPENDENT</type>
                     <key>ram_free</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -1354,7 +1502,7 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     <type>DEPENDENT</type>
                     <key>ram_total</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>B</units>
                     <preprocessing>
                         <step>
@@ -1627,29 +1775,18 @@ return ec_emeter_offset + ((emeter_a_consumed + emeter_b_consumed + emeter_c_con
                     </tags>
                 </item>
                 <item>
-                    <uuid>8c75d74cad834425a8da022e8d4b3557</uuid>
+                    <uuid>3be4affc0ee64957aab6101f87f169b3</uuid>
                     <name>Status data</name>
-                    <type>HTTP_AGENT</type>
+                    <type>DEPENDENT</type>
                     <key>status</key>
-                    <delay>30</delay>
+                    <delay>0</delay>
                     <history>1h</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <authtype>BASIC</authtype>
-                    <username>{$SHELLY_USER}</username>
-                    <password>{$SHELLY_PASS}</password>
-                    <description>Collect data from Shelly device status API.</description>
-                    <preprocessing>
-                        <step>
-                            <type>JSONPATH</type>
-                            <parameters>
-                                <parameter>$.body</parameter>
-                            </parameters>
-                        </step>
-                    </preprocessing>
-                    <url>http://{HOST.IP}/status</url>
-                    <follow_redirects>NO</follow_redirects>
-                    <output_format>JSON</output_format>
+                    <description>Collect data from HTTP or MQTT data collector items.</description>
+                    <master_item>
+                        <key>http.get[{$SHELLY_HOST},{$SHELLY_USER},{$SHELLY_PASS}]</key>
+                    </master_item>
                     <tags>
                         <tag>
                             <tag>Application</tag>
@@ -1728,7 +1865,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>total_power</key>
                     <delay>0</delay>
-                    <history>365d</history>
+                    <history>1825d</history>
                     <value_type>FLOAT</value_type>
                     <units>W</units>
                     <preprocessing>
@@ -1810,6 +1947,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>unixtime</key>
                     <delay>0</delay>
+                    <history>1w</history>
                     <units>unixtime</units>
                     <preprocessing>
                         <step>
@@ -1844,12 +1982,40 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     </triggers>
                 </item>
                 <item>
+                    <uuid>cd607f9158814daa8a0524670cefee5d</uuid>
+                    <name>Firmware beta version</name>
+                    <type>DEPENDENT</type>
+                    <key>update.beta_version</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.beta_version</parameter>
+                            </parameters>
+                            <error_handler>CUSTOM_VALUE</error_handler>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
                     <uuid>9acda239f1674008a4b8e1893c16d272</uuid>
                     <name>Update available</name>
                     <type>DEPENDENT</type>
                     <key>update.has_update</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1890,7 +2056,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>update.new_version</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1917,7 +2083,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>update.old_version</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -1953,12 +2119,39 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     </triggers>
                 </item>
                 <item>
+                    <uuid>0814f99bc8844e16ae35439ab18f111f</uuid>
+                    <name>Update status</name>
+                    <type>DEPENDENT</type>
+                    <key>update.status</key>
+                    <delay>0</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.update.status</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>status</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>System</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
                     <uuid>2ef19e5b21c8478a9c1ea4f4ce4ff251</uuid>
                     <name>Uptime</name>
                     <type>DEPENDENT</type>
                     <key>uptime</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <units>uptime</units>
                     <preprocessing>
                         <step>
@@ -1998,7 +2191,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.connected</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -2029,7 +2222,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ip</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -2060,7 +2253,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.rssi</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <value_type>FLOAT</value_type>
                     <units>dBm</units>
                     <valuemap>
@@ -2094,7 +2287,7 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <type>DEPENDENT</type>
                     <key>wifi_sta.ssid</key>
                     <delay>0</delay>
-                    <history>10d</history>
+                    <history>1w</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <preprocessing>
@@ -2125,6 +2318,36 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
                     <macro>{$EC_EM_CONSUMPTION}</macro>
                     <value>0</value>
                     <description>Total value on your electric company electrometer in Wh at the moment you reset Shelly 3EM data.</description>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_LOSS_WARN}</macro>
+                    <value>20</value>
+                </macro>
+                <macro>
+                    <macro>{$ICMP_RESPONSE_TIME_WARN}</macro>
+                    <value>0.15</value>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_HOST}</macro>
+                    <value>tcp://localhost:1883</value>
+                    <description>MQTT broker host</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_PASS}</macro>
+                    <type>SECRET_TEXT</type>
+                    <description>MQTT broker password, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_BROKER_USER}</macro>
+                    <description>MQTT broker user, if configured</description>
+                </macro>
+                <macro>
+                    <macro>{$MQTT_DEVICE_ID}</macro>
+                    <description>Shelly device MQTT ID</description>
+                </macro>
+                <macro>
+                    <macro>{$SHELLY_HOST}</macro>
+                    <description>Device host</description>
                 </macro>
                 <macro>
                     <macro>{$SHELLY_PASS}</macro>
@@ -2186,60 +2409,6 @@ return (emeter_a + emeter_b + emeter_c + emeter_n);</parameter>
             </valuemaps>
         </template>
     </templates>
-    <triggers>
-        <trigger>
-            <uuid>0cdc792f96b94ae89a56ba75cdda716c</uuid>
-            <expression>last(/Template Shelly 3EM/fs_free)&gt;=last(/Template Shelly 3EM/fs_size)*0.8 and last(/Template Shelly 3EM/fs_free)&lt;last(/Template Shelly 3EM/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>3e1fe8780db745fc93cc1d25a4b5e504</uuid>
-            <expression>last(/Template Shelly 3EM/fs_free)&gt;=last(/Template Shelly 3EM/fs_size)*0.9</expression>
-            <name>Sensor file system space is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>eadb1851b212499890689498226b474c</uuid>
-            <expression>last(/Template Shelly 3EM/ram_free)&gt;=last(/Template Shelly 3EM/ram_total)*0.8 and last(/Template Shelly 3EM/ram_free)&lt;last(/Template Shelly 3EM/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>WARNING</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-        <trigger>
-            <uuid>0b5c883005824f4db490922adc4a0022</uuid>
-            <expression>last(/Template Shelly 3EM/ram_free)&gt;=last(/Template Shelly 3EM/ram_total)*0.9</expression>
-            <name>Sensor memory is low</name>
-            <status>DISABLED</status>
-            <priority>AVERAGE</priority>
-            <tags>
-                <tag>
-                    <tag>Application</tag>
-                    <value>System</value>
-                </tag>
-            </tags>
-        </trigger>
-    </triggers>
     <graphs>
         <graph>
             <uuid>d37485c728f14dc6afd45ccbf80d0089</uuid>
