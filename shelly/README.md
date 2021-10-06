@@ -39,7 +39,8 @@ Each template contains three data collection items, "Data collector - HTTP", "Da
 # Important notes
 
 - Battery devices like Motion, H&T, Flood and Button1 are proven to be unreliable and collecting their status information even when using MQTT is not easy. These devices tend to go offline to save battery and to avoid overheating (generated heat would cause temperature sensor to report devices own reperature instead of the locations). This also means that most of the time they are not available by HTTP and even MQTT does not provide status updates as requested, but only if temperature or other measured value changes by configured margin. This makes them hard to monitor via Zabbix and unless turned off, most of the time Zabbix templates will trigger No data received.  
-- Battery devices templates contain ICMP monitoring that might be disables as it would most likely always report unavialbale because it went offline.  
+- Battery devices templates contain ICMP monitoring that might be disabled as it would most likely always report device unreachable, because it usually turns itelf offline for extended periods of time.  
+- Shelly H&T even when using USB addon and setting device to externally powered will go offline to reduce heate produced by device which would interfere with measurments.  
 - Template for Shelly 3EM device contain disabled Electrometer N values as these values are optional on device and therefore might need manual enabling.  
 
 Not all templates triggers are actually useful so disable/enable them according your personal need.  
