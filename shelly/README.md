@@ -46,6 +46,8 @@ Not all templates triggers are actually useful so disable/enable them according 
 
 # Other sources
 
+https://share.zabbix.com/shelly-monitoring  
+
 https://shelly-api-docs.shelly.cloud/  
 https://ticket.shelly.support/  
 https://www.zabbix.com/integrations/mqtt  
